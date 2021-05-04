@@ -1,0 +1,15 @@
+
+<div class="entity-label"> <?= $label ?> </div>
+<input type="hidden" class="nested-data-type-value" data-value-key="@value" />
+<div class="properties" data-value-key="@id">
+    <div class="repeat-property">
+        <select name="property-dropdown" data-value-key="property-label-1">
+            <?php foreach($properties as $property): ?>
+                <option value="<?= $property->term() ?>"><?= $property->label() ?></option>
+            <?php endforeach; ?>
+        </select>
+        <textarea name="property-value" data-value-key="property-value-1"></textarea>
+    </div>
+</div>
+
+<label class="o-icon-add add-property">Add Property</label>

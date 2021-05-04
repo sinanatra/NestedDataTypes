@@ -57,11 +57,12 @@ class Module extends AbstractModule
         $assetUrl = $view->plugin('assetUrl');
         $view->headLink()
             ->appendStylesheet($assetUrl('css/nesteddatatype.css', 'NestedDataType'));
+        $view->headScript()
+            ->appendFile($assetUrl('js/nesteddatatype.js', 'NestedDataType'));
     }
 
     public function addResourcesClassesServices(Event $event)
     {
-        // $resourcesProperties = $this->getServiceLocator()->get('Omeka\ApiManager')->search('resource_classes')->getContent();
         $resourcesClasses = $this->getServiceLocator()->get('Omeka\ApiManager')->search('resource_classes')->getContent();
 
         $names = $event->getParam('registered_names');

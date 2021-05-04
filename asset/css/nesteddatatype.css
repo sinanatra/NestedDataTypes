@@ -1,12 +1,20 @@
-.property-label{
+.entity-label {
     padding-left: 5px;
     display: block;
 }
 
-.property-language{
+.property-language {
     display: block !important;
 }
 
-.property-language ~ textarea{
+.property-language ~ textarea {
     padding-left: 5px !important;
+}
+
+.add-property {
+    margin-left: 10px !important;
+}
+
+.add-property[class*="o-icon-"]::before{
+    padding-right: 5px;
 }

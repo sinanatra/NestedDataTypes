@@ -3,9 +3,10 @@
 namespace NestedDataType\DataType;
 
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\Form;
-use Laminas\Form\Element;
+use Omeka\Entity\Value;
+use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Representation\ResourceClassRepresentation;
+use Omeka\Api\Representation\PropertyRepresentation;
 use Omeka\Api\Representation\ValueRepresentation;
 use Omeka\DataType\Literal;
 
@@ -19,11 +20,13 @@ class NestedDataType extends Literal
     /**
      * Constructor
      *
-     * @param CustomVocabRepresentation $vocab
+     * @param ResourceClassRepresentation $resourceClass
+     * @param PropertyRepresentation[] $properties
      */
-    public function __construct(ResourceClassRepresentation $resourceClass)
+    public function __construct(ResourceClassRepresentation $resourceClass, array $properties)
     {
         $this->resourceClass = $resourceClass;
+        $this->properties = $properties;
     }
 
     public function getName()
@@ -43,47 +46,47 @@ class NestedDataType extends Literal
 
     public function form(PhpRenderer $view)
     {
-        $label = $this->getLabel();
-        $element = new Element\Textarea('html');
-        
-        $element->setAttributes([
-            'class' => 'value',
-            'data-value-key' => '@value',
+        return $view->partial('common/data-type/nested', [
+            'dataType' => $this->getName(),
+            'label' => $this->getLabel(),
+            'properties' => $this->properties,
+            'resource' => $view->resource,
         ]);
-
-        // $translate = $view->plugin('translate');
-        // $html = $view->hyperlink('', '#', ['class' => 'value-language o-icon-language', 'title' => $translate('Set language')]);
-        // $html .= '<input class="value-language property-language" type="text" data-value-key="@language" aria-label="' . $translate('Language') . '">';
-        $html .= '<div class="property-label">'. $label .'</div>';
-        $html .= $view->formTextarea($element);
-
-        return $html;
     }
-    
+
     public function getJsonLd(ValueRepresentation $value)
     {    
         $label = $this->getLabel();
+        $valuesFlattened = preg_replace('/\;/', ' ', $value->value());
+        $valuesArray = explode(";",$value->value());
+        $propertiesArray = explode(";",$value->uri()); // this has to change
+        $classesAndProperties =  array_combine( $propertiesArray, $valuesArray);
 
         $jsonLd = [
-            '@value' => $value->value(),
-            'entity' => $label,
-        ];         
+            '@value' => $valuesFlattened,
+            'entity_label' => $label,
+            'properties' => $classesAndProperties
+        ];
+
         return $jsonLd;   
     }
     
-    public function getFulltextText(PhpRenderer $view, ValueRepresentation $value)
-    {
-        return $this->render($view, $value);
+    public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
+        
+        $propLabels = array();
+        $propValues = array();
+
+        // limit the range properly
+        for($i = 0; $i < 20; ++$i ) {
+            if($valueObject['property-label-' . $i]) {
+                $propLabels[] = $valueObject['property-label-' . $i];
+            }
+            if($valueObject['property-value-' . $i]) {
+                $propValues[] = $valueObject['property-value-' . $i];
+            }
+        } 
+
+        $value->setUri(implode(";",$propLabels)); // this has to change
+        $value->setValue(implode(";",$propValues));
     }
-
-    // public function render(PhpRenderer $view, ValueRepresentation $value)
-    // {
-    //     return $value->value();
-    // }
-
-    // public function validate()
-    // {
-    //     return false;
-    // }
-
 }
