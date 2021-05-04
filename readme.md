@@ -14,7 +14,7 @@ For instance:
 
 Can be structured as a multi input field:
 
-![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/e6d66a71581b18433c31d3bcab31c2ecfb355ac5/img.png)
+![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/607f3207c23b29bde0f7b0151b8e33e236ea1c1c/img.png)
 
 The module adds two keys to the json-ld Omeka S provides: the `entity_label`  and the `properties`. 
 This will make further conversions to RDF/XML easier.
