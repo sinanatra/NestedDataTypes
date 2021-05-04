@@ -1,8 +1,8 @@
 
-<div class="entity-label"> <?= $label ?> </div>
-<input type="hidden" class="nested-data-type-value" data-value-key="@value" />
-<div class="properties" data-value-key="@id">
-    <div class="repeat-property">
+<div class="nested-data-type_entity_label"> <?= $label ?> </div>
+<input type="hidden" class="nested-data-type_value" data-value-key="@value" />
+<div class="nested-data-type_properties" data-value-key="@id">
+    <div class="nested-data-type_repeat_property">
         <select name="property-dropdown" data-value-key="property-label-1">
             <?php foreach($properties as $property): ?>
                 <option value="<?= $property->term() ?>"><?= $property->label() ?></option>
@@ -12,4 +12,4 @@
     </div>
 </div>
 
-<label class="o-icon-add add-property">Add Property</label>
+<label class="o-icon-add nested-data-type_add_property">Add Property</label>
