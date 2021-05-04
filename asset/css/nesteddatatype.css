@@ -11,8 +11,18 @@
     padding-right: 5px;
 }
 
-.inputs .nested-data-type_repeat_property select{
+.inputs .nested-data-type_repeat_property datalist{
     border-radius: 0;
     margin: 0;
+}
+
+.nested-data-type_property_dropdown{
+    width: calc(100% - 10px);
+    border: none;
+    margin-left: 5px;
     font-style: italic;
+}
+
+.nested-data-type_property_dropdown::-webkit-calendar-picker-indicator {
+    opacity: 100;
 }

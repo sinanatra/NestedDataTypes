@@ -4,7 +4,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const container = thisValue.find('.nested-data-type_properties');
 
     // I have to add a default Value to trigger the hydrate() function
-    const defaultValue = thisValue.find('.nested-data-type_value').attr({ 'value': 'value' });
+    const defaultValue = thisValue.find('.nested-data-type_value').val('value' );
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -12,8 +12,9 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const num = container.find('.nested-data-type_repeat_property').length;
         const clone = container.append(container.find('.nested-data-type_repeat_property').last().clone());
 
-        const select = container.find('.nested-data-type_repeat_property').last().find('select');
+        const select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
         select.attr({ 'data-value-key': `property-label-${num + 1}` });
+        select.val('');
 
         const textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
         textarea.attr({ 'data-value-key': `property-value-${num + 1}` });
@@ -29,7 +30,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             
             keys.forEach(function (element, i) {
                 const container = thisValue.find('.nested-data-type_properties');
-                const select = container.find('.nested-data-type_repeat_property').last().find('select');
+                const select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
                 const textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
 
                 if(i == 0){
