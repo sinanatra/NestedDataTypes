@@ -27,22 +27,24 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             
             const properties = valueObj.properties;
             const keys = Object.keys(properties);
+            const container = thisValue.find('.nested-data-type_properties');
             
             keys.forEach(function (element, i) {
-                const container = thisValue.find('.nested-data-type_properties');
-                const select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
-                const textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
-
+                
                 if(i == 0){
+                    let select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
+                    let textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
                     select.val(element);
                     textarea.val(properties[element]);
                 }
-                else{
+                else {
                     const clone = container.append(container.find('.nested-data-type_repeat_property').last().clone());
-
-                    select.attr({ 'data-value-key': `property-label-${i + 1}` });
+                    let select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
+                    let textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
+    
+                    select.attr({'data-value-key': `property-label-${i + 1}`});
                     select.val(element);
-                    textarea.attr({ 'data-value-key': `property-value-${i + 1}` })
+                    textarea.attr({'data-value-key': `property-value-${i + 1}`})
                     textarea.val(properties[element]);
                 }
 
