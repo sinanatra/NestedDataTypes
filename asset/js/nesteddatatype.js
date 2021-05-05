@@ -1,10 +1,11 @@
 $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
-    const addBtn = thisValue.find('.nested-data-type_add_property');
     const container = thisValue.find('.nested-data-type_properties');
+    const addBtn = thisValue.find('.nested-data-type_add_property');
+    const rmvBtn = $('.nested-data-type_remove_property');
 
     // I have to add a default Value to trigger the hydrate() function
-    const defaultValue = thisValue.find('.nested-data-type_value').val('value' );
+    const defaultValue = thisValue.find('.nested-data-type_value').val('value');
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -21,17 +22,21 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         textarea.val('');
     });
 
+    rmvBtn.on('click', function (e) {
+        e.preventDefault();
+        $(this).parent().remove();
+    });
+
     // Prepares the fields to be rendered in the frontend
     if (0 === type.indexOf('nesteddatatype#')) {
         try {
-            
             const properties = valueObj.properties;
             const keys = Object.keys(properties);
             const container = thisValue.find('.nested-data-type_properties');
-            
+
             keys.forEach(function (element, i) {
-                
-                if(i == 0){
+
+                if (i == 0) {
                     let select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
                     let textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
                     select.val(element);
@@ -41,15 +46,15 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                     const clone = container.append(container.find('.nested-data-type_repeat_property').last().clone());
                     let select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
                     let textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
-    
-                    select.attr({'data-value-key': `property-label-${i + 1}`});
+
+                    select.attr({ 'data-value-key': `property-label-${i + 1}` });
                     select.val(element);
-                    textarea.attr({'data-value-key': `property-value-${i + 1}`})
+                    textarea.attr({ 'data-value-key': `property-value-${i + 1}` })
                     textarea.val(properties[element]);
                 }
 
             });
         }
-        catch { }
+        catch (error) { console.error(error); }
     }
 });

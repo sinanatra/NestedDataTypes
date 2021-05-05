@@ -5,10 +5,20 @@
 
 .nested-data-type_add_property {
     margin-left: 10px !important;
+    cursor: pointer;
 }
 
 .nested-data-type_add_property[class*="o-icon-"]::before{
     padding-right: 5px;
+}
+
+.o-icon-delete.nested-data-type_remove_property {
+    width: fit-content;
+    position: absolute;
+    left: 100%;
+    margin-left: 10px;
+    margin-top: -30px;
+    cursor: pointer;
 }
 
 .inputs .nested-data-type_repeat_property datalist{
