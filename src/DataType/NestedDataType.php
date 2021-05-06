@@ -36,7 +36,7 @@ class NestedDataType extends Literal
 
     public function getLabel()
     {
-        return $this->resourceClass->term();
+        return $this->resourceClass->label();
     }
     
     public function getOptgroupLabel()
@@ -71,22 +71,37 @@ class NestedDataType extends Literal
         return $jsonLd;   
     }
     
+    /**
+     * @param array $valueObject
+     */
+    public function isValid(array $valueObject){
+
+        // foreach($valueObject as $key => $item) {
+        //     if (strpos($key, 'property-label') !== false) {
+        //         if(in_array($valueObject[$key], $this->properties) == false){
+        //             return false;
+        //         }
+        //     }
+        // }
+
+        return true;
+    }
+
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
         $propLabels = array();
         $propValues = array();
 
-        // limit the range properly
-        for($i = 0; $i < 20; ++$i ) {
-            if($valueObject['property-label-' . $i]) {
-                $propLabels[] = $valueObject['property-label-' . $i];
+        foreach($valueObject as $key => $item) {
+            if (strpos($key, 'property-label') !== false) {
+                $propLabels[] = $item;
             }
-            if($valueObject['property-value-' . $i]) {
-                $propValues[] = $valueObject['property-value-' . $i];
+            if (strpos($key, 'property-value') !== false) {
+                $propValues[] = $item;
             }
-        } 
+        }
 
-        $value->setUri(implode(";",$propLabels)); // this has to change
         $value->setValue(implode(";",$propValues));
+        $value->setUri(implode(";",$propLabels)); // this has to change
     }
 }
