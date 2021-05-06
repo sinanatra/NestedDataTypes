@@ -59,7 +59,7 @@ class NestedDataType extends Literal
         $label = $this->getLabel();
         $valuesFlattened = preg_replace('/\;/', ' ', $value->value());
         $valuesArray = explode(";",$value->value());
-        $propertiesArray = explode(";",$value->uri()); // this has to change
+        $propertiesArray = explode(";", preg_replace('/\ /', '_', $value->uri())); // this has to change
         $classesAndProperties =  array_combine( $propertiesArray, $valuesArray);
 
         $jsonLd = [
@@ -76,6 +76,7 @@ class NestedDataType extends Literal
      */
     public function isValid(array $valueObject){
 
+        //  to do
         // foreach($valueObject as $key => $item) {
         //     if (strpos($key, 'property-label') !== false) {
         //         if(in_array($valueObject[$key], $this->properties) == false){
