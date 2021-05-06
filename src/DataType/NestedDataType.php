@@ -71,23 +71,24 @@ class NestedDataType extends Literal
         return $jsonLd;   
     }
     
-    // public function isValid(array $valueObject){
-    //     $propLabels = array();
+    public function isValid(array $valueObject){
+        $propLabels = array();
+        
+        // limit the range properly
+        for($i = 0; $i < 20; ++$i ) {
+            if($valueObject['property-label-' . $i]) {
+                $propLabels[] = $valueObject['property-label-' . $i];
+            }
+        } 
 
-    //     for($i = 0; $i < 20; ++$i ) {
-    //         if($valueObject['property-label-' . $i]) {
-    //             $propLabels[] = $valueObject['property-label-' . $i];
-    //         }
-    //     } 
+        foreach($propLabels as $prop){
+            if((in_array($prop, $this->properties))){
+                return false;
+            }
+        }
 
-    //     foreach($propLabels as $prop){
-    //         if((in_array($prop, $this->properties))){
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    // }
+        return true;
+    }
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
