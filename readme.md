@@ -28,11 +28,11 @@ The json-ld also keeps the `@value` key, for basic processing.
     "property_label": "P43 has dimension",
     "is_public": true,
     "@value": "width 90 cm",
-    "entity_label": "cidoc-crm:E54_Dimension",
+    "entity_label": "E54 Dimension",
     "properties": {
-        "cidoc-crm:P2_has_type": "width",
-        "cidoc-crm:P90_has_value": "90",
-        "cidoc-crm:P91_has_unit": "cm"
+        "P2_has_type": "width",
+        "P90_has_value": "90",
+        "P91_has_unit": "cm"
     }
 }
 ```
