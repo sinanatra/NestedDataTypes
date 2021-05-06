@@ -1,4 +1,4 @@
-$(document).on('o:prepare-value', function (e, type, value, valueObj) {
+$(document).on('o:prepare-value', (e, type, value, valueObj) => {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
