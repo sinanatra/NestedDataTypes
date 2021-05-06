@@ -13,7 +13,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const cloneItem = () => container.append(container.find('.nested-data-type_repeat_property').last().clone());
 
     // Add item on click
-    addBtn.on('click', function (e) {
+    addBtn.on('click', (e) => {
         e.preventDefault();
         const num = container.find('.nested-data-type_repeat_property').length;
         findItems();
@@ -24,7 +24,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         textarea.val('');
     });
 
-    rmvBtn.on('click', function (e) {
+    rmvBtn.on('click', (e) => {
         e.preventDefault();
         $(this).parent().remove();
     });
@@ -36,7 +36,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             const keys = Object.keys(properties);
             const container = thisValue.find('.nested-data-type_properties');
 
-            keys.forEach(function (element, i) {
+            keys.forEach((element, i) => {
 
                 if (i == 0) {
                     findItems();
