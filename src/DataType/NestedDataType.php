@@ -71,21 +71,18 @@ class NestedDataType extends Literal
         return $jsonLd;   
     }
     
+    /**
+     * @param array $valueObject
+     */
     public function isValid(array $valueObject){
-        $propLabels = array();
-        
-        // limit the range properly
-        for($i = 0; $i < 20; ++$i ) {
-            if($valueObject['property-label-' . $i]) {
-                $propLabels[] = $valueObject['property-label-' . $i];
-            }
-        } 
 
-        foreach($propLabels as $prop){
-            if((in_array($prop, $this->properties))){
-                return false;
-            }
-        }
+        // foreach($valueObject as $key => $item) {
+        //     if (strpos($key, 'property-label') !== false) {
+        //         if(in_array($valueObject[$key], $this->properties) == false){
+        //             return false;
+        //         }
+        //     }
+        // }
 
         return true;
     }
@@ -95,17 +92,16 @@ class NestedDataType extends Literal
         $propLabels = array();
         $propValues = array();
 
-        // limit the range properly
-        for($i = 0; $i < 20; ++$i ) {
-            if($valueObject['property-label-' . $i]) {
-                $propLabels[] = $valueObject['property-label-' . $i];
+        foreach($valueObject as $key => $item) {
+            if (strpos($key, 'property-label') !== false) {
+                $propLabels[] = $item;
             }
-            if($valueObject['property-value-' . $i]) {
-                $propValues[] = $valueObject['property-value-' . $i];
+            if (strpos($key, 'property-value') !== false) {
+                $propValues[] = $item;
             }
-        } 
+        }
 
-        $value->setUri(implode(";",$propLabels)); // this has to change
         $value->setValue(implode(";",$propValues));
+        $value->setUri(implode(";",$propLabels)); // this has to change
     }
 }
