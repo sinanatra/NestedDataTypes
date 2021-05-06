@@ -36,7 +36,7 @@ class NestedDataType extends Literal
 
     public function getLabel()
     {
-        return $this->resourceClass->term();
+        return $this->resourceClass->label();
     }
     
     public function getOptgroupLabel()
