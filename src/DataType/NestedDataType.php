@@ -58,13 +58,11 @@ class NestedDataType extends Literal
     {    
         $label = $this->getLabel();
         $properties = json_decode($value->value(),true);
-        $values = array_column($properties,'value');
-        $labels = array_column($properties,'label');
-
+        
         $jsonLd = [
             '@value' => implode(' ', $values),
             'entity_label' => $label,
-            'properties' =>  array_combine($labels, $values),
+            'properties' =>  $properties,
         ];
 
         return $jsonLd;   

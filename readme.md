@@ -23,17 +23,26 @@ The json-ld also keeps the `@value` key, for basic processing.
 
 ```json
 {
-"type": "nesteddatatype#cidoc-crm:E54_Dimension",
+    "type": "nesteddatatype#cidoc-crm:E54_Dimension",
     "property_id": 1262,
     "property_label": "P43 has dimension",
     "is_public": true,
     "@value": "width 90 cm",
-    "entity_label": "cidoc-crm:E54_Dimension",
-    "properties": {
-        "cidoc-crm:P2_has_type": "width",
-        "cidoc-crm:P90_has_value": "90",
-        "cidoc-crm:P91_has_unit": "cm"
-    }
+    "entity_label": "E54 Dimension",
+    "properties": [
+        {
+            "label": "P2 has type",
+            "value": "width"
+        },
+        {
+            "label": "P90 has value",
+            "value": "90"
+        },
+        {
+            "label": "P90 has unit",
+            "value": "cm"
+        }
+    ]
 }
 ```
 

@@ -40,17 +40,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             const keys = Object.keys(properties);
 
             keys.forEach((element, i) => {
-
                 if (i == 0) {
                     findItems();
-                    select.val(element);
-                    textarea.val(properties[element]);
+                    select.val(properties[element]['label']);
+                    textarea.val(properties[element]['value']);
                 }
                 else {
                     cloneItem();
                     findItems();
-                    select.attr({ 'data-value-key': `property-label-${i + 1}` }).val(element);
-                    textarea.attr({ 'data-value-key': `property-value-${i + 1}` }).val(properties[element]);
+                    select.attr({ 'data-value-key': `property-label-${i + 1}` }).val(properties[element]['label']);
+                    textarea.attr({ 'data-value-key': `property-value-${i + 1}` }).val(properties[element]['value']);
                 }
             });
         }
