@@ -3,8 +3,8 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
     const rmvBtn = $('.nested-data-type_remove_property');
-
-    // I have to add a default Value to trigger the hydrate() function
+    
+    // Add a default Value to trigger the hydrate() function
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
     const defaultProeprty = thisValue.find('.nested-data-type_property').val('value');
 
@@ -27,6 +27,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         textarea.val('');
     });
 
+    // Remove Button on click
     rmvBtn.on('click', function (e) {
         e.preventDefault();
         $(this).parent().remove();

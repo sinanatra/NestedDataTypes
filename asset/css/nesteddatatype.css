@@ -12,6 +12,12 @@
     padding-right: 5px;
 }
 
+.inputs .nested-data-type_button{
+    background: none;
+    box-shadow: none;
+    padding: unset;
+    margin: unset;
+}
 .o-icon-delete.nested-data-type_remove_property {
     width: fit-content;
     position: absolute;

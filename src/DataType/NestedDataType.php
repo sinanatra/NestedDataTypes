@@ -57,15 +57,14 @@ class NestedDataType extends Literal
     public function getJsonLd(ValueRepresentation $value)
     {    
         $label = $this->getLabel();
-        $valuesFlattened = preg_replace('/\;/', ' ', $value->value());
-        $valuesArray = explode(";",$value->value());
-        $propertiesArray = explode(";", preg_replace('/\ /', '_', $value->uri())); // this has to change
-        $classesAndProperties =  array_combine( $propertiesArray, $valuesArray);
+        $properties = json_decode($value->value(),true);
+        $values = array_column($properties,'value');
+        $labels = array_column($properties,'label');
 
         $jsonLd = [
-            '@value' => $valuesFlattened,
+            '@value' => implode(' ', $values),
             'entity_label' => $label,
-            'properties' => $classesAndProperties
+            'properties' =>  array_combine($labels, $values),
         ];
 
         return $jsonLd;   
@@ -76,33 +75,40 @@ class NestedDataType extends Literal
      */
     public function isValid(array $valueObject){
 
-        //  to do
-        // foreach($valueObject as $key => $item) {
-        //     if (strpos($key, 'property-label') !== false) {
-        //         if(in_array($valueObject[$key], $this->properties) == false){
-        //             return false;
-        //         }
-        //     }
-        // }
+        $labels = array_map(
+            function ($prop){
+                return $prop->label();
+            },
+            $this->properties
+        );
+
+        foreach($valueObject as $key => $label) {
+            if (strpos($key, 'property-label') !== false) {
+                if(!in_array($label, $labels)){
+                    return false;
+                }
+            }
+        }
 
         return true;
     }
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
-        $propLabels = array();
-        $propValues = array();
+        $properties = [];
+        
+        foreach($valueObject as $key => $label) {
 
-        foreach($valueObject as $key => $item) {
-            if (strpos($key, 'property-label') !== false) {
-                $propLabels[] = $item;
+            if(substr($key,0,15) !== 'property-label-'){
+                continue;
             }
-            if (strpos($key, 'property-value') !== false) {
-                $propValues[] = $item;
-            }
+
+            $idx = (int) substr($key,15);
+            $val = $valueObject["property-value-$idx"];
+            $properties[$idx] = ['label' => $label, 'value' => $val];
         }
 
-        $value->setValue(implode(";",$propValues));
-        $value->setUri(implode(";",$propLabels)); // this has to change
+        ksort($properties, SORT_NUMERIC);
+        $value->setValue(json_encode(array_values($properties)));
     }
 }
