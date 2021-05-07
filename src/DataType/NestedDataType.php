@@ -36,7 +36,7 @@ class NestedDataType extends Literal
 
     public function getLabel()
     {
-        return $this->resourceClass->term();
+        return $this->resourceClass->label();
     }
     
     public function getOptgroupLabel()
@@ -103,22 +103,19 @@ class NestedDataType extends Literal
                 continue;
             }
 
-
-            $localName = '';
-
-            foreach ($this->properties as $prop) {
-                if($prop->label() == $label){
-                    $localName = $prop->term();
-                    break;
-                }
-            }
-
             $idx = (int) substr($key,15);
             $val = $valueObject["property-value-$idx"];
-            $properties[$idx] = ['label' => $localName, 'value' => $val];
+            $properties[$idx] = ['label' => $label, 'value' => $val];
         }
 
         ksort($properties, SORT_NUMERIC);
         $value->setValue(json_encode(array_values($properties)));
+    }
+
+    public function render(PhpRenderer $view, ValueRepresentation $value){
+        $properties = json_decode($value->value(),true);
+        $values = array_column($properties,'value');
+
+        return implode(' ', $values);
     }
 }
