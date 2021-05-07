@@ -36,7 +36,7 @@ class NestedDataType extends Literal
 
     public function getLabel()
     {
-        return $this->resourceClass->label();
+        return $this->resourceClass->term();
     }
     
     public function getOptgroupLabel()
@@ -96,16 +96,26 @@ class NestedDataType extends Literal
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
         $properties = [];
-        
+
         foreach($valueObject as $key => $label) {
 
             if(substr($key,0,15) !== 'property-label-'){
                 continue;
             }
 
+
+            $localName = '';
+
+            foreach ($this->properties as $prop) {
+                if($prop->label() == $label){
+                    $localName = $prop->term();
+                    break;
+                }
+            }
+
             $idx = (int) substr($key,15);
             $val = $valueObject["property-value-$idx"];
-            $properties[$idx] = ['label' => $label, 'value' => $val];
+            $properties[$idx] = ['label' => $localName, 'value' => $val];
         }
 
         ksort($properties, SORT_NUMERIC);

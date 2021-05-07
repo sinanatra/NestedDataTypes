@@ -38,7 +38,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         try {
             const properties = valueObj.properties;
             const keys = Object.keys(properties);
-            const container = thisValue.find('.nested-data-type_properties');
 
             keys.forEach((element, i) => {
 
