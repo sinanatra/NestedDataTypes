@@ -94,21 +94,27 @@ class NestedDataType extends Literal
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
-        $properties = [];
-
-        foreach($valueObject as $key => $label) {
-
-            if(substr($key,0,15) !== 'property-label-'){
-                continue;
-            }
-
-            $idx = (int) substr($key,15);
-            $val = $valueObject["property-value-$idx"];
-            $properties[$idx] = ['label' => $label, 'value' => $val];
+        if( array_column($valueObject['@value'], 'label')){
+            $value->setValue(json_encode($valueObject['@value']));
         }
-
-        ksort($properties, SORT_NUMERIC);
-        $value->setValue(json_encode(array_values($properties)));
+        else {
+            $properties = [];
+            
+            foreach($valueObject as $key => $label) {
+                
+                if(substr($key,0,15) !== 'property-label-'){
+                    continue;
+                }
+                
+                $idx = (int) substr($key,15);
+                $val = $valueObject["property-value-$idx"];
+                $properties[$idx] = ['label' => $label, 'value' => $val];
+            }
+            
+            ksort($properties, SORT_NUMERIC);
+               
+            $value->setValue(json_encode(array_values($properties)));
+        }
     }
 
     public function render(PhpRenderer $view, ValueRepresentation $value){
