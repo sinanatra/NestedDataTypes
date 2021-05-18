@@ -94,7 +94,7 @@ class NestedDataType extends Literal
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
-        if( array_column($valueObject['@value'], 'label')){
+        if( array_column($valueObject['@value'], 'label') and array_column($valueObject['@value'], 'value')){
             $value->setValue(json_encode($valueObject['@value']));
         }
         else {
