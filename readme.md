@@ -39,7 +39,6 @@ The json-ld also keeps the `@value` key, for basic processing.
         {
             "label": "P90 has value",
             "value": "90",
-            "uri": ""
         },
         {
             "label": "P90 has unit",
