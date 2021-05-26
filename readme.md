@@ -2,7 +2,8 @@
 
 This module allows the user to choose a specific resource class as datatype while editing resource templates.    Additionally, when editing an item, the user can select inner properties for the chosen class.
 
-It was initially designed to work with the CIDOC-CRM nested structure in Omeka S, while avoiding to create an abundance of Omeka resources. 
+It was initially designed to work with the nested CIDOC-CRM structure in Omeka S, avoiding creating an abundance of Omeka resources.
+However, it should only replace an Omeka resource, literal, or URI when strictly necessary.  
 
 For instance:
 
@@ -14,7 +15,7 @@ For instance:
 
 Can be structured as a multi input field:
 
-![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/607f3207c23b29bde0f7b0151b8e33e236ea1c1c/img.png)
+![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/2fdc3736eba180b10b55f055842ca5468de6ebbc/img.png)
 
 The module adds two keys to the json-ld Omeka S provides: the `entity_label`  and the `properties`. 
 This will make further conversions to RDF/XML easier.
@@ -32,15 +33,18 @@ The json-ld also keeps the `@value` key, for basic processing.
     "properties": [
         {
             "label": "P2 has type",
-            "value": "width"
+            "value": "width",
+            "uri": "http://vocab.getty.edu/aat/300055647"
         },
         {
             "label": "P90 has value",
-            "value": "90"
+            "value": "90",
+            "uri": ""
         },
         {
             "label": "P90 has unit",
-            "value": "cm"
+            "value": "cm",
+            "uri": "http://vocab.getty.edu/aat/300379098"
         }
     ]
 }
