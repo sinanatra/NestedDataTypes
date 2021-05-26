@@ -108,19 +108,19 @@ class NestedDataType extends Literal
                 
                 $idx = (int) substr($key,15);
                 $val = $valueObject["property-value-$idx"];
-                $properties[$idx] = ['label' => $label, 'value' => $val];
+                $uri = $valueObject["property-uri-$idx"];
+                $properties[$idx] = ['label' => $label, 'value' => $val, 'uri' => $uri];
             }
             
             ksort($properties, SORT_NUMERIC);
-               
             $value->setValue(json_encode(array_values($properties)));
         }
     }
 
     public function render(PhpRenderer $view, ValueRepresentation $value){
+        
         $properties = json_decode($value->value(),true);
         $values = array_column($properties,'value');
-
         return implode(' ', $values);
     }
 }

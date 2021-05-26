@@ -1,6 +1,7 @@
 .nested-data-type_entity_label {
     padding-left: 5px;
     font-weight: 500;
+    border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
 .nested-data-type_add_property {
@@ -13,33 +14,64 @@
 }
 
 .inputs .nested-data-type_button{
+    margin: unset;
+    padding: unset;
     background: none;
     box-shadow: none;
-    padding: unset;
-    margin: unset;
 }
+
 .o-icon-delete.nested-data-type_remove_property {
-    width: fit-content;
     position: absolute;
     left: 100%;
     margin-left: 10px;
     margin-top: -30px;
-    cursor: pointer;
+    width: fit-content;
     color: #cdcdcd;
+    cursor: pointer;
 }
 
+/* .nested-data-type_repeat_property {
+    box-shadow: inset 0px 1px 2px 0px #9d9d9d;
+} */
+
 .inputs .nested-data-type_repeat_property datalist{
-    border-radius: 0;
     margin: 0;
+    border-radius: 0;
 }
 
 .nested-data-type_property_dropdown{
-    width: calc(100% - 10px);
+    padding-left: 6px;
+    width: 100%;
+    background: none;
     border: none;
-    margin-left: 5px;
-    font-style: italic;
+    border-bottom: 1px solid rgba(0,0,0,0.35);
+    background: rgba(0,0,0,0.05);
+    height: 36px;
 }
 
 .nested-data-type_property_dropdown::-webkit-calendar-picker-indicator {
     opacity: 100;
+}
+
+.nested-data-type_properties .input{
+    border-bottom: 1px solid rgba(0,0,0,0.35);
+}
+
+.nested-data-type_properties .input label {
+    z-index: 1;
+    display: flex;
+    padding: 6px 0 6px 6px;
+    width: auto;
+    font-weight: bold;
+    color: rgba(0,0,0,0.35);
+}
+
+.nested-data-type_properties .input textarea {
+    margin: -6px 0 -6px 0;
+    height: 36px;
+    border: 0;
+    padding: 6px 0 6px 6px;
+    font-weight: normal;
+    background: transparent;
+    min-height: 36px !important;
 }
