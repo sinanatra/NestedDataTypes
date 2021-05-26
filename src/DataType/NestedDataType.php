@@ -109,7 +109,11 @@ class NestedDataType extends Literal
                 $idx = (int) substr($key,15);
                 $val = $valueObject["property-value-$idx"];
                 $uri = $valueObject["property-uri-$idx"];
-                $properties[$idx] = ['label' => $label, 'value' => $val, 'uri' => $uri];
+                $properties[$idx] = array_merge(
+                    ['label' => $label],
+                    $val ? ['value' => $val] : [],
+                    $uri ? ['uri' => $uri] : []
+                );
             }
             
             ksort($properties, SORT_NUMERIC);
