@@ -10,7 +10,16 @@
                 <option value="<?= $property->label() ?>"><?= $property->term() ?></option>
             <?php endforeach; ?>
         </datalist>
-        <textarea name="property-value" data-value-key="property-value-1"></textarea>
+        <div class="input">
+            <label class="value">
+            Value<textarea class="property-value" name="property-value" data-value-key="property-value-1"></textarea>
+            </label>
+        </div>
+        <div class="input">
+            <label class="value-uri">
+            URI<textarea class="property-uri" name="property-uri" data-value-key="property-uri-1"></textarea>
+            </label>
+        </div>
         <button class="nested-data-type_button o-icon-delete nested-data-type_remove_property"></button>
     </div>
 </div>

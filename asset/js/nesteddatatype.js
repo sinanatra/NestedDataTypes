@@ -8,10 +8,11 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
     const defaultProeprty = thisValue.find('.nested-data-type_property').val('value');
 
-    let select, textarea;
+    let select, textareaValue, textareaUri;
     const findItems = () => {
         select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
-        textarea = container.find('.nested-data-type_repeat_property').last().find('textarea');
+        textareaValue = container.find('.nested-data-type_repeat_property').last().find('.property-value');
+        textareaUri = container.find('.nested-data-type_repeat_property').last().find('.property-uri');
     }
     const cloneItem = () => container.append(container.find('.nested-data-type_repeat_property').last().clone());
 
@@ -23,8 +24,10 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         findItems();
         select.attr({ 'data-value-key': `property-label-${num + 1}` });
         select.val('');
-        textarea.attr({ 'data-value-key': `property-value-${num + 1}` });
-        textarea.val('');
+        textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` });
+        textareaValue.val('');
+        textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` });
+        textareaUri.val('');
     });
 
     // Remove Button on click
@@ -43,13 +46,15 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 if (i == 0) {
                     findItems();
                     select.val(properties[element]['label']);
-                    textarea.val(properties[element]['value']);
+                    textareaValue.val(properties[element]['value']);
+                    textareaUri.val(properties[element]['uri']);
                 }
                 else {
                     cloneItem();
                     findItems();
                     select.attr({ 'data-value-key': `property-label-${i + 1}` }).val(properties[element]['label']);
-                    textarea.attr({ 'data-value-key': `property-value-${i + 1}` }).val(properties[element]['value']);
+                    textareaValue.attr({ 'data-value-key': `property-value-${i + 1}` }).val(properties[element]['value']);
+                    textareaUri.attr({ 'data-value-key': `property-uri-${i + 1}` }).val(properties[element]['uri']);
                 }
             });
         }
