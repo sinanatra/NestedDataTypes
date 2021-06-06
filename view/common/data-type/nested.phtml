@@ -7,7 +7,7 @@
         <input class="nested-data-type_property_dropdown" list="property-dropdown" data-value-key="property-label-1" placeholder="Select a property">
         <datalist id="property-dropdown" name="property-dropdown">
             <?php foreach($properties as $property): ?>
-                <option value="<?= $property->label() ?>"><?= $property->term() ?></option>
+                <option value="<?= $property->term() ?>"><?= $property->label() ?></option>
             <?php endforeach; ?>
         </datalist>
         <div class="input">

@@ -3,7 +3,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
     const rmvBtn = $('.nested-data-type_remove_property');
-    
+
     // Add a default Value to trigger the hydrate() function
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
     const defaultProeprty = thisValue.find('.nested-data-type_property').val('value');
@@ -42,19 +42,25 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             const properties = valueObj.properties;
             const keys = Object.keys(properties);
 
-            keys.forEach((element, i) => {
-                if (i == 0) {
+            keys.forEach((element, idx) => {
+                let val = properties[element];
+                
+                if (idx == 1) {
                     findItems();
-                    select.val(properties[element]['label']);
-                    textareaValue.val(properties[element]['value']);
-                    textareaUri.val(properties[element]['uri']);
+                    select.val(element);
+                    if (val[0]['@value']) textareaValue.val(val[0]['@value']);
+                    if (val[0]['label']) textareaValue.val(val[0]['label']);
+                    if (val[0]['@id']) textareaUri.val(val[0]['@id']);
                 }
-                else {
+                else if (idx > 1) {
                     cloneItem();
                     findItems();
-                    select.attr({ 'data-value-key': `property-label-${i + 1}` }).val(properties[element]['label']);
-                    textareaValue.attr({ 'data-value-key': `property-value-${i + 1}` }).val(properties[element]['value']);
-                    textareaUri.attr({ 'data-value-key': `property-uri-${i + 1}` }).val(properties[element]['uri']);
+                    textareaValue.val('');
+                    textareaUri.val('');
+                    select.attr({ 'data-value-key': `property-label-${idx}` }).val(element);
+                    if (val[0]['@value']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[0]['@value']);
+                    if (val[0]['label']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[0]['label']);
+                    if (val[0]['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[0]['@id']);
                 }
             });
         }
