@@ -59,15 +59,13 @@ class NestedDataType extends Literal
         $properties = json_decode($value->value(), true);
         $values = [];
 
-        foreach ($properties as $key => $val) {
-            if($key != 0){
-                foreach ($val as $innerKey => $innerVal) {
-                    if($innerVal['@value']){
-                        $values[$innerKey] = $innerVal['@value'];
-                    }
-                    if($innerVal['@id']){
-                        $values[$innerKey] = $innerVal['label'];
-                    }
+        foreach ($properties[0] as $key => $val) {
+            foreach ($val as $innerKey => $innerVal) {
+                if($innerVal['@value']){
+                    $values[$key] = $innerVal['@value'];
+                }
+                if($innerVal['@id']){
+                    $values[$key] = $innerVal['label'];
                 }
             }
         }
@@ -131,24 +129,22 @@ class NestedDataType extends Literal
             }
             
             ksort($properties, SORT_NUMERIC);
-            $value->setValue(json_encode($properties));     
+            $value->setValue(json_encode([$properties]));     
         }
     }
 
     public function render(PhpRenderer $view, ValueRepresentation $value){
         
-        $values = [];
         $properties = json_decode($value->value(), true);
+        $values = [];
 
-        foreach ($properties as $key => $val) {
-            if($key != 0){
-                foreach ($val as $innerKey => $innerVal) {
-                    if($innerVal['@value']){
-                        $values[$innerKey] = $innerVal['@value'];
-                    }
-                    if($innerVal['@id']){
-                        $values[$innerKey] = $innerVal['label'];
-                    }
+        foreach ($properties[0] as $key => $val) {
+            foreach ($val as $innerKey => $innerVal) {
+                if($innerVal['@value']){
+                    $values[$key] = $innerVal['@value'];
+                }
+                if($innerVal['@id']){
+                    $values[$key] = $innerVal['label'];
                 }
             }
         }

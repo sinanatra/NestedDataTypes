@@ -40,10 +40,10 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     if (0 === type.indexOf('nesteddatatype#')) {
         try {
             const properties = valueObj.properties;
-            const keys = Object.keys(properties);
+            const keys = Object.keys(properties[0]);
 
             keys.forEach((element, idx) => {
-                let val = properties[element];
+                let val = properties[0][element];
                 
                 if (idx == 1) {
                     findItems();
