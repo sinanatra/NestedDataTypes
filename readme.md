@@ -17,7 +17,7 @@ Can be structured as a multi input field:
 
 ![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/2fdc3736eba180b10b55f055842ca5468de6ebbc/img.png)
 
-The module adds two keys to the json-ld Omeka S provides: the `entity_label`  and the `properties`. 
+The module adds a keys to the json-ld Omeka S provides: the `properties`. 
 This will make further conversions to RDF/XML easier.
 
 The json-ld also keeps the `@value` key, for basic processing.
@@ -28,22 +28,27 @@ The json-ld also keeps the `@value` key, for basic processing.
     "property_id": 1262,
     "property_label": "P43 has dimension",
     "is_public": true,
-    "@value": "width 90 cm",
-    "entity_label": "E54 Dimension",
+    "@value": "width 90 centimeters", 
     "properties": [
         {
-            "label": "P2 has type",
-            "value": "width",
-            "uri": "http://vocab.getty.edu/aat/300055647"
-        },
-        {
-            "label": "P90 has value",
-            "value": "90",
-        },
-        {
-            "label": "P90 has unit",
-            "value": "cm",
-            "uri": "http://vocab.getty.edu/aat/300379098"
+            "@type": "crm:E54_Dimension",
+            "crm:P2_has_type": [
+                {
+                    "@id": "http://vocab.getty.edu/aat/300055647",
+                    "label": "width"
+                }
+            ],
+            "crm:P90_has_value": [
+                {
+                    "@value": "90"
+                }
+            ],
+            "crm:P91_has_unit": [
+                {
+                    "@id": "http://vocab.getty.edu/aat/300379098",
+                    "label": "centimeters"
+                }
+            ]
         }
     ]
 }
