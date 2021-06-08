@@ -43,24 +43,27 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             const keys = Object.keys(properties[0]);
 
             keys.forEach((element, idx) => {
-                let val = properties[0][element];
-                
+                let item = properties[0][element];
+                let val = item[0]
+                console.log(idx, item)
+
                 if (idx == 1) {
                     findItems();
                     select.val(element);
-                    if (val[0]['@value']) textareaValue.val(val[0]['@value']);
-                    if (val[0]['label']) textareaValue.val(val[0]['label']);
-                    if (val[0]['@id']) textareaUri.val(val[0]['@id']);
+                    if (val['@value']) textareaValue.val(val['@value']);
+                    if (val['label']) textareaValue.val(val['label']);
+                    if (val['@id']) textareaUri.val(val['@id']);
                 }
                 else if (idx > 1) {
                     cloneItem();
                     findItems();
-                    textareaValue.val('');
-                    textareaUri.val('');
+                    textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val('');
+                    textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val('');
                     select.attr({ 'data-value-key': `property-label-${idx}` }).val(element);
-                    if (val[0]['@value']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[0]['@value']);
-                    if (val[0]['label']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[0]['label']);
-                    if (val[0]['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[0]['@id']);
+                    
+                    if (val['@value']) { textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['@value']) };
+                    if (val['label']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['label']);
+                    if (val['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val['@id']);
                 }
             });
         }
