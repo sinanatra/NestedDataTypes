@@ -17,7 +17,7 @@ Can be structured as a multi input field:
 
 ![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/2fdc3736eba180b10b55f055842ca5468de6ebbc/img.png)
 
-The module adds a keys to the json-ld Omeka S provides: the `properties`. 
+The module adds the `properties` key to the json-ld Omeka S provides. 
 This will make further conversions to RDF/XML easier.
 
 The json-ld also keeps the `@value` key, for basic processing.
