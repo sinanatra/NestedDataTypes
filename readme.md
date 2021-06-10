@@ -17,10 +17,7 @@ Can be structured as a multi input field:
 
 ![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/2fdc3736eba180b10b55f055842ca5468de6ebbc/img.png)
 
-The module adds the `properties` key to the json-ld Omeka S provides. 
-This will make further conversions to RDF/XML easier.
-
-The json-ld also keeps the `@value` key, for basic processing.
+The module adds a `properties` key to the json-ld Omeka S provides, and it keeps the `@value` key, for basic processing.
 
 ```json
 {
@@ -52,6 +49,40 @@ The json-ld also keeps the `@value` key, for basic processing.
         }
     ]
 }
+```
+
+The `property` values are also structured as JSON-LD that can be easily converted to other semantic web standars:
+
+### RDFXML:
+```xml
+<ns0:P43_has_dimension>
+      <ns0:E54_Dimension>
+        <ns0:P2_has_type rdf:resource="http://vocab.getty.edu/aat/300055647"/>
+        <ns0:P90_has_value rdf:datatype="http://www.w3.org/2001/XMLSchema#string">90</ns0:P90_has_value>
+        <ns0:P91_has_unit rdf:resource="http://vocab.getty.edu/aat/300379098"/>
+      </ns0:E54_Dimension>
+    </ns0:P43_has_dimension>
+```
+### Turtle:
+```
+@prefix ns0: <crm:> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+[] ns0:P43_has_dimension [
+    a ns0:E54_Dimension ;
+    ns0:P2_has_type <http://vocab.getty.edu/aat/300055647> ;
+    ns0:P90_has_value "90"^^xsd:string ;
+    ns0:P91_has_unit <http://vocab.getty.edu/aat/300379098>
+  ] .
+```
+
+### N-Triples:
+```
+_:genid1 <crm:P43_has_dimension> _:genid2 .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <crm:E54_Dimension> .
+_:genid2 <crm:P2_has_type> <http://vocab.getty.edu/aat/300055647> .
+_:genid2 <crm:P90_has_value> "90"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid2 <crm:P91_has_unit> <http://vocab.getty.edu/aat/300379098> .
 ```
 
 ## Installation
