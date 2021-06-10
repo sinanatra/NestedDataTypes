@@ -56,12 +56,12 @@ The `property` values are also structured as JSON-LD that can be easily converte
 ### RDFXML:
 ```xml
 <ns0:P43_has_dimension>
-      <ns0:E54_Dimension>
+    <ns0:E54_Dimension>
         <ns0:P2_has_type rdf:resource="http://vocab.getty.edu/aat/300055647"/>
         <ns0:P90_has_value rdf:datatype="http://www.w3.org/2001/XMLSchema#string">90</ns0:P90_has_value>
         <ns0:P91_has_unit rdf:resource="http://vocab.getty.edu/aat/300379098"/>
-      </ns0:E54_Dimension>
-    </ns0:P43_has_dimension>
+    </ns0:E54_Dimension>
+</ns0:P43_has_dimension>
 ```
 ### Turtle:
 ```
