@@ -21,13 +21,13 @@ class NestedDataTypeFactory implements AbstractFactoryInterface
         }
         
         $apiManager = $services->get('Omeka\ApiManager');
-
         $resourceClasses = $apiManager->search('resource_classes', ['term' => $term])->getContent();
         
         $vocabularyId = $resourceClasses[0]->vocabulary()->id();
         $properties = $apiManager->search('properties', ['vocabulary_id' => $vocabularyId])->getContent();
+        $classes = $apiManager->search('resource_classes', ['vocabulary_id' => $vocabularyId])->getContent();
 
-        $i = new NestedDataType($resourceClasses[0], $properties);
+        $i = new NestedDataType($resourceClasses[0], $properties, $classes);
 
         return $i;
     }

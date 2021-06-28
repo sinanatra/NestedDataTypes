@@ -22,11 +22,13 @@ class NestedDataType extends Literal
      *
      * @param ResourceClassRepresentation $resourceClass
      * @param PropertyRepresentation[] $properties
+     * @param ResourceClassRepresentation[] $classes
      */
-    public function __construct(ResourceClassRepresentation $resourceClass, array $properties)
+    public function __construct(ResourceClassRepresentation $resourceClass, array $properties, array $classes)
     {
         $this->resourceClass = $resourceClass;
         $this->properties = $properties;
+        $this->classes = $classes;
     }
 
     public function getName()
@@ -50,6 +52,7 @@ class NestedDataType extends Literal
             'dataType' => $this->getName(),
             'label' => $this->getLabel(),
             'properties' => $this->properties,
+            'classes' => $this->classes,
             'resource' => $view->resource,
         ]);
     }
@@ -122,6 +125,20 @@ class NestedDataType extends Literal
                 $idx = (int) substr($key,15);
                 $val = $valueObject["property-value-$idx"];
                 $uri = $valueObject["property-uri-$idx"];
+                
+                // $innerClass = $valueObject["inner-class-$idx"];
+                // $innerProp = $valueObject["inner-property-$idx"];
+
+                // if($innerClass && $innerProp){
+                //     $properties[$label][0] = array_merge(
+                //         ["@type" => $innerClass ],
+                //         [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ]
+                //    );
+                // } else {
+                //     $properties[$label][0] = array_merge(
+                //          $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
+                //     );
+                // }
 
                 $properties[$label][0] = array_merge(
                      $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
