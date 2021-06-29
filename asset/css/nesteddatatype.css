@@ -30,8 +30,12 @@
     cursor: pointer;
 }
 
+.nested-data-type_repeat_class {
+    margin-left: 1px;
+}
+
 .nested-data-type_repeat_class input {
-    padding-left: 20px;
+    width: calc(50% - 2px);
     background: #FFF8E5;
 }
 
@@ -42,7 +46,7 @@
 
 .nested-data-type-dropwdown {
     padding-left: 6px;
-    width: 95%;
+    width: calc(100% - 20px);
     background: none;
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.35);
@@ -56,6 +60,9 @@
 
 .inputs .nested-data-type_add_class {
     font-size: .75rem;
+    height: fit-content;
+    border-radius: 0;
+    width: 15px;
 }
 
 .nested-data-type_property_dropdown::-webkit-calendar-picker-indicator {

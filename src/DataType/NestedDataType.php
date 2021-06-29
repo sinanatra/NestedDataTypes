@@ -66,9 +66,20 @@ class NestedDataType extends Literal
             foreach ($val as $innerKey => $innerVal) {
                 if($innerVal['@value']){
                     $values[$key] = $innerVal['@value'];
+                    continue;
                 }
-                if($innerVal['@id']){
+                if($innerVal['label']){
                     $values[$key] = $innerVal['label'];
+                    continue;
+                }
+                foreach ($innerVal as $secondKey => $secondVal) {
+                    $values[$key] = $secondVal['@value'];
+                    if($secondVal['@value']){
+                        $values[$key] = $secondVal['@value'];
+                    }
+                    if($secondVal['label']){
+                        $values[$key] = $secondVal['label'];
+                    }
                 }
             }
         }
@@ -126,23 +137,21 @@ class NestedDataType extends Literal
                 $val = $valueObject["property-value-$idx"];
                 $uri = $valueObject["property-uri-$idx"];
                 
-                // $innerClass = $valueObject["inner-class-$idx"];
-                // $innerProp = $valueObject["inner-property-$idx"];
+                $innerClass = $valueObject["inner-class-$idx"];
+                $innerProp = $valueObject["inner-property-$idx"];
 
-                // if($innerClass && $innerProp){
-                //     $properties[$label][0] = array_merge(
-                //         ["@type" => $innerClass ],
-                //         [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ]
-                //    );
-                // } else {
-                //     $properties[$label][0] = array_merge(
-                //          $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
-                //     );
-                // }
+                if($innerClass && $innerProp){
+                    $properties[$label][0] = array_merge(
+                        ["@type" => $innerClass ],
+                        [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ]
+                   );
+                } else {
+                    $properties[$label][0] = array_merge(
+                         $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
+                    );
+                }
 
-                $properties[$label][0] = array_merge(
-                     $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
-                );
+                
             }
             
             // ksort($properties, SORT_NUMERIC);
@@ -159,9 +168,20 @@ class NestedDataType extends Literal
             foreach ($val as $innerKey => $innerVal) {
                 if($innerVal['@value']){
                     $values[$key] = $innerVal['@value'];
+                    continue;
                 }
-                if($innerVal['@id']){
+                if($innerVal['label']){
                     $values[$key] = $innerVal['label'];
+                    continue;
+                }
+                foreach ($innerVal as $secondKey => $secondVal) {
+                    $values[$key] = $secondVal['@value'];
+                    if($secondVal['@value']){
+                        $values[$key] = $secondVal['@value'];
+                    }
+                    if($secondVal['label']){
+                        $values[$key] = $secondVal['label'];
+                    }
                 }
             }
         }
