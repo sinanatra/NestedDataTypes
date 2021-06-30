@@ -48,7 +48,7 @@ class NestedDataType extends Literal
 
     public function form(PhpRenderer $view)
     {
-        return $view->partial('common/data-type/nested', [
+        return $view->partial('nested-data-type/data-type/nested-data-type', [
             'dataType' => $this->getName(),
             'label' => $this->getLabel(),
             'properties' => $this->properties,

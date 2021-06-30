@@ -1,3 +1,5 @@
+
+
 $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
@@ -17,6 +19,8 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         innerClass = container.find('.nested-data-type_repeat_property').last().find('.inner-class');
         innerProperty = container.find('.nested-data-type_repeat_property').last().find('.inner-property');
     }
+
+    // fix clone(true), when adding a property, the event are not working properly.
     const cloneItem = () => container.append(container.find('.nested-data-type_repeat_property').last().clone());
 
     // Add item on click
@@ -125,4 +129,29 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         }
         catch (error) { console.error(error); }
     }
+
+
+
 });
+
+// $(document).ready(function () {
+
+//     const selectResource = $('.select-resource');
+//     selectResource.on('click', function (res) {
+//         console.log(res)
+//     })
+//     // $(document).on('o:sidebar-opened', function (e) {
+//     //     e.preventDefault();
+//     //     console.log(e, e.target)
+//     //     // TODO Determine the resource in a cleaner way.
+//     //     if ($(e.target).is('.button')) {
+//     //         const resource = JSON.parse($('.resource-details').attr('data-resource-values'));
+//     //         let id = resource['@id'];
+//     //         let label = resource['display_title'];
+
+//     //         console.log(id, label);
+
+//     //     }
+//     // })
+
+// })
