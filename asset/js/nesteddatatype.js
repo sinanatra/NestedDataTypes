@@ -4,7 +4,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
-    const addClass = $('.nested-data-type_add_class');
+    const addClass = thisValue.find('.nested-data-type_add_class');
     const rmvBtn = $('.nested-data-type_remove_property');
 
     // Add a default Value to trigger the hydrate() function
@@ -53,6 +53,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     // Add Class on click
     addClass.on('click', function (e) {
+        console.log(e)
         e.preventDefault();
         $(this).next().children().val('')
         $(this).next().toggle();
