@@ -39,13 +39,9 @@
 
 <button class="nested-data-type_button o-icon-add nested-data-type_add_property">Add Property</button>
 
-<?php
-echo $this->hyperlink(('Link Resource'), '#item-resource-select', [
-        'class' => 'nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select',
-        'data-sidebar-content-url' => $this->url('admin/default', ['controller' => 'nested-data-type', 'action' => 'sidebar-select'], true),
-    ]);
-
-echo $this->hyperlink(('Items'), '#item-resource-select', [
-        'class' => 'nested-data-type_button o-icon-items button resource-select',
-        'data-sidebar-content-url' => $this->url('admin/default', ['controller' => 'item', 'action' => 'sidebar-select'], false),
-    ]);
+<a 
+    class="nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select" 
+    data-sidebar-content-url="<?= $this->url('admin/default', ['controller' => 'nested-data-type', 'action' => 'sidebar-select'], false) ?>" 
+    href="#item-resource-select"> 
+    Items
+</a>

@@ -7,10 +7,12 @@ use Laminas\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-    public function sidebarItemSelectAction()
+    public function sidebarSelectAction()
     {
+        $this->setBrowseDefaults('created');
+
         $response = $this->api()->search('items', $this->params()->fromQuery());
-        $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
+        $this->paginator($response->getTotalResults());
         
         $view = new ViewModel;
         $view->setVariable('items', $response->getContent());

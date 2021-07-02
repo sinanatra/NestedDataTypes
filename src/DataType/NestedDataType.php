@@ -154,7 +154,6 @@ class NestedDataType extends Literal
                 
             }
             
-            // ksort($properties, SORT_NUMERIC);
             $value->setValue(json_encode([$properties]));     
         }
     }
