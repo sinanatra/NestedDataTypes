@@ -19,9 +19,10 @@ class IndexController extends AbstractActionController
         $view->setVariable('search', $this->params()->fromQuery('search'));
         $view->setVariable('resourceClassId', $this->params()->fromQuery('resource_class_id'));
         $view->setVariable('itemSetId', $this->params()->fromQuery('item_set_id'));
-        $view->setVariable('showDetails', true);
+        $view->setVariable('showDetails', false);
         $view->setTerminal(true);
-        $view->setTemplate('omeka/admin/item/sidebar-select');
+        // $view->setTemplate('omeka/admin/item/sidebar-select');
+        $view->setTemplate('/nested-data-type/item/sidebar-select');
         return $view;
     }
 }

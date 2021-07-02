@@ -4,6 +4,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
+    const selectResource = $('.nested-data-type__resource_link');
 
     // Add a default Value to trigger the hydrate() function
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
@@ -125,28 +126,31 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         catch (error) { console.error(error); }
     }
 
+    $(document).on('click', '.nested-data-type__resource_link', function (e) {
+        e.preventDefault();
 
+        const resource = JSON.parse($(this.parentElement).attr('data-resource-values'));
+        const id = resource['@id'];
+        const label = resource['display_title'];
+
+        if (thisValue.is('.selecting-resource')) {
+            const num = container.find('.nested-data-type_repeat_property').length;
+            cloneItem();
+            findItems();
+
+            select.attr({ 'data-value-key': `property-label-${num + 1}` })
+                .val('');
+            textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` })
+                .val(label);
+            textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` })
+                .val(id);
+            innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` })
+                .val('');
+            innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` })
+                .val('');
+        };
+    });
 
 });
 
-// $(document).ready(function () {
 
-//     const selectResource = $('.select-resource');
-//     selectResource.on('click', function (res) {
-//         console.log(res)
-//     })
-//     // $(document).on('o:sidebar-opened', function (e) {
-//     //     e.preventDefault();
-//     //     console.log(e, e.target)
-//     //     // TODO Determine the resource in a cleaner way.
-//     //     if ($(e.target).is('.button')) {
-//     //         const resource = JSON.parse($('.resource-details').attr('data-resource-values'));
-//     //         let id = resource['@id'];
-//     //         let label = resource['display_title'];
-
-//     //         console.log(id, label);
-
-//     //     }
-//     // })
-
-// })
