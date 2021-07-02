@@ -21,7 +21,6 @@ class IndexController extends AbstractActionController
         $view->setVariable('itemSetId', $this->params()->fromQuery('item_set_id'));
         $view->setVariable('showDetails', false);
         $view->setTerminal(true);
-        // $view->setTemplate('omeka/admin/item/sidebar-select');
         $view->setTemplate('/nested-data-type/item/sidebar-select');
         return $view;
     }

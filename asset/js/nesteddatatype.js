@@ -65,7 +65,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             keys.forEach((element, idx) => {
                 let item = properties[0][element];
                 let val = item[0]
-
                 if (typeof val === "object") {
                     if (idx == 1) {
                         findItems();
@@ -73,6 +72,20 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         if (val['@value']) textareaValue.val(val['@value']);
                         if (val['label']) textareaValue.val(val['label']);
                         if (val['@id']) textareaUri.val(val['@id']);
+                        if (val['@id'] && val['@id'].includes('/api/items/')) {
+
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.o-title.items')
+                                .remove();
+
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.input')
+                                .css('display', 'none');
+                            let link = `<span class="o-title items ml"><a href="${url}"> ${label}</a></span>`
+                            container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+                        }
                     }
 
                     else if (idx > 1) {
@@ -88,6 +101,22 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         if (val['@value']) { textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['@value']) };
                         if (val['label']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['label']);
                         if (val['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val['@id']);
+
+                        if (val['@id'] && val['@id'].includes('/api/items/')) {
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.o-title.items')
+                                .remove();
+
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.input')
+                                .css('display', 'none');
+
+                            let changeLinkView = val['@id'].replace('/api/items/', '/admin/item/');
+                            let link = `<span class="o-title items ml"><a href="${changeLinkView}"> ${val['label']}</a></span>`
+                            container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+                        }
                     }
 
                     for (const [key, value] of Object.entries(val)) {
@@ -106,6 +135,22 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 textareaValue.val(val[key]['@id']);
                             }
                             if (val[key]['label']) textareaValue.val(val[key]['label']);
+
+                            if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.o-title.items')
+                                    .remove();
+
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.input')
+                                    .css('display', 'none');
+
+                                let changeLinkView = val[key]['@id'].replace('/api/items/', '/admin/item/');
+                                let link = `<span class="o-title items ml"><a href="${changeLinkView}"> ${val[key]['label']}</a></span>`
+                                container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+                            }
                         }
                         else if (idx > 1) {
                             innerClass.attr({ 'data-value-key': `inner-class-${idx}` });
@@ -114,10 +159,26 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             if (val[key]['@value']) {
                                 textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['@value']);
                             }
-                            if (val[key]['@id']) {
-                                textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['@id']);
+                            if (val[key]['label']) {
+                                textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['label']);
                             }
-                            if (val[key]['label']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[key]['label']);
+                            if (val[key]['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[key]['@id']);
+                            
+                            if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.o-title.items')
+                                    .remove();
+
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.input')
+                                    .css('display', 'none');
+
+                                let changeLinkView = val[key]['@id'].replace('/api/items/', '/admin/item/');
+                                let link = `<span class="o-title items ml"><a href="${changeLinkView}"> ${val[key]['label']}</a></span>`
+                                container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+                            }
                         }
                     }
                 }
@@ -132,22 +193,42 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const resource = JSON.parse($(this.parentElement).attr('data-resource-values'));
         const id = resource['@id'];
         const label = resource['display_title'];
+        const url = resource['url'];
 
         if (thisValue.is('.selecting-resource')) {
             const num = container.find('.nested-data-type_repeat_property').length;
+
             cloneItem();
             findItems();
 
             select.attr({ 'data-value-key': `property-label-${num + 1}` })
                 .val('');
             textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` })
-                .val(label);
+                .val(label)
             textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` })
-                .val(id);
+                .val(id)
             innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` })
                 .val('');
             innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` })
                 .val('');
+
+            container.find('.nested-data-type_repeat_property')
+                .last()
+                .find('.input')
+                .css('display', 'none');
+
+            container.find('.nested-data-type_repeat_property')
+                .last()
+                .find('.o-title.items')
+                .remove();
+
+
+            let link = `<span class="o-title items ml"><a href="${url}"> ${label}</a></span>`
+
+            console.log(link)
+
+            container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+
         };
     });
 
