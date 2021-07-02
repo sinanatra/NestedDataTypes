@@ -1,3 +1,7 @@
+.ml {
+    margin-left: 10px;;
+}
+
 .nested-data-type_entity_label {
     padding-left: 5px;
     font-weight: 500;
@@ -9,11 +13,11 @@
     cursor: pointer;
 }
 
-.nested-data-type_add_property[class*="o-icon-"]::before{
+.nested-data-type_add_property[class*="o-icon-"]::before {
     padding-right: 5px;
 }
 
-.inputs .nested-data-type_button{
+.inputs .nested-data-type_button {
     margin: unset;
     padding: unset;
     background: none;
@@ -39,7 +43,7 @@
     background: #FFF8E5;
 }
 
-.inputs .nested-data-type_repeat_property datalist{
+.inputs .nested-data-type_repeat_property datalist {
     margin: 0;
     border-radius: 0;
 }
@@ -69,7 +73,7 @@
     opacity: 100;
 }
 
-.nested-data-type_properties .input{
+.nested-data-type_properties .input {
     border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
@@ -90,4 +94,9 @@
     font-weight: normal;
     background: transparent;
     min-height: 36px !important;
+}
+
+.nested-data-type_properties .items a:after {
+    font-family: "Font Awesome 5 Free";
+    content: " \f1b2";
 }

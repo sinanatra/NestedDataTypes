@@ -48,7 +48,7 @@ class NestedDataType extends Literal
 
     public function form(PhpRenderer $view)
     {
-        return $view->partial('common/data-type/nested', [
+        return $view->partial('nested-data-type/data-type/nested-data-type', [
             'dataType' => $this->getName(),
             'label' => $this->getLabel(),
             'properties' => $this->properties,
@@ -95,25 +95,25 @@ class NestedDataType extends Literal
     /**
      * @param array $valueObject
      */
-    public function isValid(array $valueObject){
+    // public function isValid(array $valueObject){
 
-        $labels = array_map(
-            function ($prop){
-                return $prop->term();
-            },
-            $this->properties
-        );
+    //     $labels = array_map(
+    //         function ($prop){
+    //             return $prop->term();
+    //         },
+    //         $this->properties
+    //     );
 
-        foreach($valueObject as $key => $label) {
-            if (strpos($key, 'property-label') !== false) {
-                if(!in_array($label, $labels)){
-                    return false;
-                }
-            }
-        }
+    //     foreach($valueObject as $key => $label) {
+    //         if (strpos($key, 'property-label') !== false) {
+    //             if(!in_array($label, $labels)){
+    //                 return false;
+    //             }
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
         
@@ -154,7 +154,6 @@ class NestedDataType extends Literal
                 
             }
             
-            // ksort($properties, SORT_NUMERIC);
             $value->setValue(json_encode([$properties]));     
         }
     }

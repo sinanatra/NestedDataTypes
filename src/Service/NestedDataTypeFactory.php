@@ -3,7 +3,7 @@
 namespace NestedDataType\Service;
 
 use NestedDataType\DataType\NestedDataType;
-use Zend\ServiceManager\Factory\AbstractFactoryInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 
 class NestedDataTypeFactory implements AbstractFactoryInterface
 {
