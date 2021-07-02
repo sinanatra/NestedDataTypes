@@ -20,13 +20,7 @@
                     <option value="<?= $class->term() ?>"><?= $class->label() ?></option>
                 <?php endforeach; ?>
             </datalist>
-
             <input class="nested-data-type-dropwdown inner-property" list="property-dropdown" data-value-key="inner-property-1" placeholder="Select a property">
-            <datalist id="property-dropdown" name="property-dropdown">
-                <?php foreach($properties as $property): ?>
-                    <option value="<?= $property->term() ?>"><?= $property->label() ?></option>
-                <?php endforeach; ?>
-            </datalist>
         </div>
 
         <div class="input">
@@ -48,10 +42,10 @@
 <?php
 echo $this->hyperlink(('Link Resource'), '#item-resource-select', [
         'class' => 'nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select',
-        'data-sidebar-content-url' => $this->url('admin/default', ['controller' => 'nested-data-type','action' => 'sidebar-select'], true),
+        'data-sidebar-content-url' => $this->url('admin/default', ['controller' => 'nested-data-type', 'action' => 'sidebar-select'], true),
     ]);
 
 echo $this->hyperlink(('Items'), '#item-resource-select', [
-        'class' => 'o-icon-items button resource-select',
+        'class' => 'nested-data-type_button o-icon-items button resource-select',
         'data-sidebar-content-url' => $this->url('admin/default', ['controller' => 'item', 'action' => 'sidebar-select'], false),
     ]);

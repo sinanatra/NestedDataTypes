@@ -4,8 +4,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
     const addBtn = thisValue.find('.nested-data-type_add_property');
-    const addClass = thisValue.find('.nested-data-type_add_class');
-    const rmvBtn = $('.nested-data-type_remove_property');
 
     // Add a default Value to trigger the hydrate() function
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
@@ -20,8 +18,8 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         innerProperty = container.find('.nested-data-type_repeat_property').last().find('.inner-property');
     }
 
-    // fix clone(true), when adding a property, the event are not working properly.
-    const cloneItem = () => container.append(container.find('.nested-data-type_repeat_property').last().clone());
+    const cloneItem = () =>
+        container.append(container.find('.nested-data-type_repeat_property').last().clone());
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -29,6 +27,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const num = container.find('.nested-data-type_repeat_property').length;
         cloneItem();
         findItems();
+
         select.attr({ 'data-value-key': `property-label-${num + 1}` })
             .val('');
         textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` })
@@ -39,21 +38,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             .val('');
         innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` })
             .val('');
-        container.find('.nested-data-type_repeat_property')
-            .last()
-            .find('.nested-data-type_repeat_class')
-            .css('display', 'block');
     });
 
     // Remove Button on click
-    rmvBtn.on('click', function (e) {
+    container.on('click', '.nested-data-type_remove_property', function (e) {
         e.preventDefault();
         $(this).parent().remove();
     });
 
     // Add Class on click
-    addClass.on('click', function (e) {
-        console.log(e)
+    container.on('click', '.nested-data-type_add_class', function (e) {
         e.preventDefault();
         $(this).next().children().val('')
         $(this).next().toggle();
