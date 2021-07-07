@@ -37,8 +37,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             textareaUri.parent().parent().css('display', 'block')
         }
 
-        console.log(textareaValue, textareaUri, renderedLink);
-
         select.attr({ 'data-value-key': `property-label-${num + 1}` })
             .val('');
         textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` })
@@ -245,8 +243,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
 
             let link = `<span class="o-title items ml"><a href="${url}"> ${label}</a></span>`
-
-            console.log(link)
 
             container.append(container.find('.nested-data-type_repeat_property').last().append(link));
 
