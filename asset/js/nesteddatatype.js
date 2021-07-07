@@ -17,10 +17,12 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         textareaUri = container.find('.nested-data-type_repeat_property').last().find('.property-uri');
         innerClass = container.find('.nested-data-type_repeat_property').last().find('.inner-class');
         innerProperty = container.find('.nested-data-type_repeat_property').last().find('.inner-property');
+        renderedLink = container.find('.nested-data-type_repeat_property').last().find('.items');
     }
 
-    const cloneItem = () =>
+    const cloneItem = () => {
         container.append(container.find('.nested-data-type_repeat_property').last().clone());
+    }
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -28,6 +30,14 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const num = container.find('.nested-data-type_repeat_property').length;
         cloneItem();
         findItems();
+
+        if (renderedLink) {
+            renderedLink.remove();
+            textareaValue.parent().parent().css('display', 'block');
+            textareaUri.parent().parent().css('display', 'block')
+        }
+
+        console.log(textareaValue, textareaUri, renderedLink);
 
         select.attr({ 'data-value-key': `property-label-${num + 1}` })
             .val('');
@@ -91,6 +101,11 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                     else if (idx > 1) {
                         cloneItem();
                         findItems();
+                        if (renderedLink) {
+                            renderedLink.remove();
+                            textareaValue.parent().parent().css('display', 'block');
+                            textareaUri.parent().parent().css('display', 'block')
+                        }
                         textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val('');
                         textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val('');
                         select.attr({ 'data-value-key': `property-label-${idx}` }).val(element);
@@ -163,7 +178,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['label']);
                             }
                             if (val[key]['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[key]['@id']);
-                            
+
                             if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
                                 container.find('.nested-data-type_repeat_property')
                                     .last()
@@ -200,6 +215,12 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
             cloneItem();
             findItems();
+            
+            if (renderedLink) {
+                renderedLink.remove();
+                textareaValue.parent().parent().css('display', 'block');
+                textareaUri.parent().parent().css('display', 'block')
+            }
 
             select.attr({ 'data-value-key': `property-label-${num + 1}` })
                 .val('');
