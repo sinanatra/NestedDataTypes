@@ -19,7 +19,41 @@ $expanded = $resourceClassId || $itemSetId || $id;
             ?>
             <input type="text" name="search" id="resource-list-search" value="<?php echo $escape($search); ?>">
             <button type="button" class="o-icon-search"><?php echo $translate('Search'); ?></button>
-            
+            <div class="resource-search-filters">
+                <a href="#"
+                    class="<?php echo $expanded ? 'collapse' : 'expand'; ?>"
+                    aria-label="<?php echo $expanded ? $translate('Collapse') : $translate('Expand'); ?>"><?php echo $translate('Filter search'); ?>
+                </a>
+                <div class="collapsible">
+                <?php
+                echo $this->resourceClassSelect([
+                    'name' => 'resource_class_id',
+                    'options' => [
+                        'empty_option' => '',
+                    ],
+                    'attributes' => [
+                        'id' => 'filter-resource-class',
+                        'class' => 'chosen-select',
+                        'value' => $resourceClassId,
+                        'data-placeholder' => 'Filter by class', // @translate
+                    ],
+                ]);
+                echo $this->itemSetSelect([
+                    'name' => 'item_set_id',
+                    'options' => [
+                        'empty_option' => '',
+                    ],
+                    'attributes' => [
+                        'id' => 'filter-item-set',
+                        'class' => 'chosen-select',
+                        'value' => $itemSetId,
+                        'data-placeholder' => 'Filter by item set', // @translate
+                    ],
+                ]);
+                ?>
+                <input type="number" name="id" min="1" step="1" value="<?php echo $this->escapeHtml($id); ?>" placeholder="<?php echo $this->escapeHtml($translate('Filter by item ID')); ?>">
+                </div>
+            </div>
         </div>
         <?php if ($itemsFound): ?>
         <?php echo $this->pagination('common/sidebar-pagination.phtml'); ?>
@@ -27,10 +61,14 @@ $expanded = $resourceClassId || $itemSetId || $id;
     </div>
 
     <?php if ($itemsFound): ?>
+    <button type="button" class="quick-select-toggle"><?php echo $translate('Add Multiple'); ?></button>
 
     <div class="items resource-list">
         <?php foreach ($items as $item):?>
         <div class="resource item" data-resource-values="<?php echo $escape(json_encode($item->valueRepresentation())); ?>">
+            <div class="select-resource-checkbox-wrapper">
+                <input type="checkbox" class="select-resource-checkbox" name="resource_ids[]" value="<?php echo $item->id(); ?>">
+            </div>
             <?php
             $content = sprintf(
                 '%s<span class="resource-name">%s</span>',
@@ -46,6 +84,11 @@ $expanded = $resourceClassId || $itemSetId || $id;
         <?php endforeach; ?>
     </div>
     <?php else: ?>
-    <span class="no-resources"><?php echo $translate(sprintf('No %s found.', $translate('items'))); ?></span>
+        <span class="no-resources"><?php echo $translate(sprintf('No %s found.', $translate('items'))); ?></span>
     <?php endif; ?>
+</div>
+
+
+<div class="confirm-panel">
+    <button type="button" class="nested-data-type__resource_multiple"><?php echo $translate('Add selected'); ?></button>
 </div>
