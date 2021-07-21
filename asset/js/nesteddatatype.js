@@ -78,11 +78,11 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             findItems();
                             select.val(element);
 
-                            if (val['@value'] && typeof val['@value'] !== "undefined") textareaValue.val(val['@value']);
-                            if (val['label'] && typeof val['label'] !== "undefined") textareaValue.val(val['label']);
-                            if (val['@id'] && typeof val['@id'] !== "undefined") textareaUri.val(val['@id']);
+                            if (val['@value']) textareaValue.val(val['@value']);
+                            if (val['label']) textareaValue.val(val['label']);
+                            if (val['@id']) textareaUri.val(val['@id']);
                             if (val['@id'] && val['@id'].includes('/api/items/')) {
-                            
+
                                 container.find('.nested-data-type_repeat_property')
                                     .last()
                                     .find('.input')
@@ -110,9 +110,9 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 .parent().css('display', 'none');
                             innerProperty.attr({ 'data-value-key': `inner-property-${idx}` }).val('');
 
-                            if (val['@value'] && typeof val['@value'] !== "undefined") { textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['@value']) };
-                            if (val['label'] && typeof val['label'] !== "undefined") textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['label']);
-                            if (val['@id'] && typeof val['@id'] !== "undefined") textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val['@id']);
+                            if (val['@value']) { textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['@value']) };
+                            if (val['label']) textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val['label']);
+                            if (val['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val['@id']);
 
                             if (val['@id'] && val['@id'].includes('/api/items/')) {
                                 container.find('.nested-data-type_repeat_property')
@@ -137,16 +137,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                     .parent().css('display', 'block');
                             }
                             if (idx == 1) {
-                                if (val[key]['@value'] && typeof val[key]['@value'] !== "undefined") {
+                                if (val[key]['@value']) {
                                     innerProperty.val(key);
                                     innerProperty.parent().css('display', 'block');
                                     textareaValue.val(val[key]['@value']);
                                 }
-                                if (val[key]['@id'] && typeof val[key]['@id'] !== "undefined") {
+                                if (val[key]['@id']) {
                                     innerProperty.val(key);
                                     textareaValue.val(val[key]['@id']);
                                 }
-                                if (val[key]['label'] && typeof val[key]['label'] !== "undefined") textareaValue.val(val[key]['label']);
+                                if (val[key]['label']) textareaValue.val(val[key]['label']);
 
                                 if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
                                     container.find('.nested-data-type_repeat_property')
@@ -168,13 +168,13 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 innerClass.attr({ 'data-value-key': `inner-class-${idx}` });
                                 innerProperty.attr({ 'data-value-key': `inner-property-${idx}` }).val(key);
 
-                                if (val[key]['@value'] && typeof val[key]['@value'] !== "undefined") {
+                                if (val[key]['@value']) {
                                     textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['@value']);
                                 }
-                                if (val[key]['label'] && typeof val[key]['label'] !== "undefined") {
+                                if (val[key]['label']) {
                                     textareaValue.attr({ 'data-value-key': `property-value-${idx}` }).val(val[key]['label']);
                                 }
-                                if (val[key]['@id'] && typeof val[key]['@id'] !== "undefined") textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[key]['@id']);
+                                if (val[key]['@id']) textareaUri.attr({ 'data-value-key': `property-uri-${idx}` }).val(val[key]['@id']);
 
                                 if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
                                     container.find('.nested-data-type_repeat_property')
