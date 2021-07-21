@@ -85,7 +85,7 @@ class NestedDataType extends Literal
         }
 
         $jsonLd = [
-            '@value' => implode(' ', $values),
+            '@value' => implode('; ', $values),
             'properties' =>  $properties,
         ];
 
@@ -97,25 +97,28 @@ class NestedDataType extends Literal
      */
     public function isValid(array $valueObject){
 
-        $labels = array_map(
-            function ($prop){
-                return $prop->term();
-            },
-            $this->properties
-        );
+        // $labels = array_map(
+        //     function ($prop){
+        //         return $prop->term();
+        //     },
+        //     $this->properties
+        // );
 
-        foreach($valueObject as $key => $label) {
-            if (strpos($key, 'property-label') !== false) {
-                if(!in_array($label, $labels)){
-                    return false;
-                }
-            }
-        }
+        // foreach($valueObject as $key => $label) {
+        //     if (strpos($key, 'property-label') !== false) {
+        //         if(!in_array($label, $labels)){
+        //             return false;
+        //         }
+        //     }
+        // }
 
         return true;
     }
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
+        
+        $prevLabel = '';
+        $num = 0;
         
         if( array_column($valueObject['@value'], '@type')) {
             $value->setValue(json_encode($valueObject['@value']));
@@ -127,9 +130,14 @@ class NestedDataType extends Literal
                 ["@type" => $this->getLabel() ]
             );
 
+
             foreach($valueObject as $key => $label) {
                 
-                if(substr($key,0,15) !== 'property-label-'){
+                if ($prevLabel == $label) {
+                    $num += 1;
+                }
+                
+                if (substr($key,0,15) !== 'property-label-'){
                     continue;
                 }
                 
@@ -140,21 +148,22 @@ class NestedDataType extends Literal
                 $innerClass = $valueObject["inner-class-$idx"];
                 $innerProp = $valueObject["inner-property-$idx"];
 
-                if($innerClass && $innerProp){
-                    $properties[$label][0] = array_merge(
+                $prevLabel = $label;
+
+                if ($innerClass && $innerProp){
+                    $properties[$label][$num] = array_merge(
                         ["@type" => $innerClass ],
                         [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ]
                    );
                 } else {
-                    $properties[$label][0] = array_merge(
+                    $properties[$label][$num] = array_merge(
                          $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
                     );
-                }
-
-                
+                }        
             }
-            
+
             $value->setValue(json_encode([$properties]));     
+            $prevLabel .= $label;
         }
     }
 
@@ -185,7 +194,7 @@ class NestedDataType extends Literal
             }
         }
 
-        return implode(' ', $values);
+        return implode('; ', $values);
     }
 }
 
