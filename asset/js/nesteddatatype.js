@@ -61,7 +61,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     }
 
     const structureInnerLinks = (insertVal, url) => {
-        let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal['label']}</a></div>`
+        let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal}</a></div>`
         container.append(container.find('.nested-data-type_repeat_property').last().append(link));
     }
 
@@ -91,7 +91,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                     .find('.input')
                                     .css('display', 'none');
 
-                                structureInnerLinks(val[key], insertVal['@id'].replace('/api/items/', '/admin/item/'));
+                                structureInnerLinks(val[key]['label'], insertVal['@id'].replace('/api/items/', '/admin/item/'));
                             }
                         }
 
@@ -126,7 +126,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                     .find('.input')
                                     .css('display', 'none');
 
-                                structureInnerLinks(val, val['@id'].replace('/api/items/', '/admin/item/'));
+                                structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
                             }
                         }
 
@@ -155,7 +155,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                         .find('.input')
                                         .css('display', 'none');
 
-                                    structureInnerLinks(val[key], val['@id'].replace('/api/items/', '/admin/item/'));
+                                    structureInnerLinks(val[key]['label'], val['@id'].replace('/api/items/', '/admin/item/'));
                                 }
                             }
                             else if (idx > 1) {
@@ -177,7 +177,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                         .find('.input')
                                         .css('display', 'none');
 
-                                    structureInnerLinks(val[key], val[key]['@id'].replace('/api/items/', '/admin/item/'));
+                                    structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
                                 }
                             }
                         }
