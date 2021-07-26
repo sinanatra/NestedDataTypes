@@ -160,8 +160,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         }
 
                         for (const [key, value] of Object.entries(val)) {
-                            console.log(key, value)
-                            if (key == '@type') { innerClass.val(value).parent().css('display', 'block'); }
+                            if (key == '@type') innerClass.val(value).parent().css('display', 'block');
                             if (idx == 1) {
                                 if (val[key]['@value']) {
                                     innerProperty.val(key);
@@ -285,12 +284,11 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 textareaUri.parent().parent().css('display', 'block')
             }
 
-            repeatProperty.attr({ 'data-value-key': `is-hidden-${num + 1}` }).val('');
-            select.attr({ 'data-value-key': `property-label-${num + 1}` }).val('');
-            textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` }).val(label)
-            textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` }).val(id)
-            innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` }).val('');
-            innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` }).val('');
+            structureField(select, `property-label-${num + 1}`);
+            structureField(textareaValue, `property-value-${num + 1}`, insertVal = label);
+            structureField(textareaUri, `property-uri-${num + 1}`, insertVal = id);
+            structureField(innerClass, `inner-class-${num + 1}`);
+            structureField(innerProperty, `inner-property-${num + 1}`);
 
             container.find('.nested-data-type_repeat_property')
                 .last()

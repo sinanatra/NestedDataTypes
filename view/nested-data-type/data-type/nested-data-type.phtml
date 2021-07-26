@@ -13,7 +13,7 @@
         <button class="nested-data-type_button o-icon-add nested-data-type_add_class"></button>
         
         <div class="nested-data-type_repeat_class hidden">
-            <input class="nested-data-type-dropwdown inner-class" list="class-dropdown" data-value-key="inner-class-1" placeholder="Select a class">
+            <input class="nested-data-type-dropwdown inner-class" list="class-dropdown" data-value-key="inner-class-1" placeholder="Select a class" />
             <datalist id="class-dropdown" name="class-dropdown">
                 <?php foreach($classes as $class): ?>
                     <option value="<?= $class->term() ?>"><?= $class->label() ?></option>
