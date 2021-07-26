@@ -64,21 +64,23 @@ class NestedDataType extends Literal
 
         foreach ($properties[0] as $key => $val) {
             foreach ($val as $innerKey => $innerVal) {
-                if($innerVal['@value']){
-                    $values[$key] = $innerVal['@value'];
-                    continue;
-                }
-                if($innerVal['label']){
-                    $values[$key] = $innerVal['label'];
-                    continue;
-                }
-                foreach ($innerVal as $secondKey => $secondVal) {
-                    $values[$key] = $secondVal['@value'];
-                    if($secondVal['@value']){
-                        $values[$key] = $secondVal['@value'];
+                if(!$innerVal['is_hidden']){
+                    if($innerVal['@value']){
+                        $values[$key] = $innerVal['@value'];
+                        continue;
                     }
-                    if($secondVal['label']){
-                        $values[$key] = $secondVal['label'];
+                    if($innerVal['label']){
+                        $values[$key] = $innerVal['label'];
+                        continue;
+                    }
+                    foreach ($innerVal as $secondKey => $secondVal) {
+                        $values[$key] = $secondVal['@value'];
+                        if($secondVal['@value']){
+                            $values[$key] = $secondVal['@value'];
+                        }
+                        if($secondVal['label']){
+                            $values[$key] = $secondVal['label'];
+                        }
                     }
                 }
             }
@@ -147,17 +149,20 @@ class NestedDataType extends Literal
                 
                 $innerClass = $valueObject["inner-class-$idx"];
                 $innerProp = $valueObject["inner-property-$idx"];
+                $isHidden = $valueObject["is-hidden-$idx"];
 
                 $prevLabel = $label;
 
                 if ($innerClass && $innerProp){
                     $properties[$label][$num] = array_merge(
                         ["@type" => $innerClass ],
-                        [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ]
+                        [$innerProp  => $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val] ],
+                        $isHidden ? ['is_hidden' => $isHidden] : []
                    );
                 } else {
                     $properties[$label][$num] = array_merge(
-                         $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val]
+                        $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val],
+                        $isHidden ? ['is_hidden' => $isHidden] : []
                     );
                 }        
             }

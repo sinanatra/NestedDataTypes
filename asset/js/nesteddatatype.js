@@ -97,19 +97,19 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         try {
             const properties = valueObj.properties;
             const keys = Object.keys(properties[0]);
-
             keys.forEach((element, idx) => {
                 let item = properties[0][element];
+
                 for (i in item) {
                     let val = item[i];
                     if (typeof val === "object") {
                         if (idx == 1) {
                             findItems();
                             select.val(element);
-
                             if (val['@value']) textareaValue.val(val['@value']);
                             if (val['label']) textareaValue.val(val['label']);
                             if (val['@id']) textareaUri.val(val['@id']);
+                            if (val['is_hidden']) container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private');
                             if (val['@id'] && val['@id'].includes('/api/items/')) {
 
                                 container.find('.nested-data-type_repeat_property')
@@ -124,13 +124,14 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         else if (idx > 1) {
                             cloneItem();
                             findItems();
+                            
+                            container.find('.nested-data-type_hide_property').last().removeClass('o-icon-private').addClass('o-icon-public');
 
                             if (renderedLink) {
                                 renderedLink.remove();
                                 textareaValue.parent().parent().css('display', 'block');
                                 textareaUri.parent().parent().css('display', 'block')
                             }
-
                             structureField(isHidden, `is-hidden-${idx}`);
                             structureField(textareaValue, `property-value-${idx}`);
                             structureField(textareaUri, `property-uri-${idx}`);
@@ -139,6 +140,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             structureField(innerProperty, `inner-property-${idx}`);
                             innerClass.parent().css('display', 'none');
 
+                            if (val['is_hidden']) container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private');
                             if (val['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['@value']); };
                             if (val['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['label']); }
                             if (val['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val['@id']); }
@@ -158,6 +160,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         }
 
                         for (const [key, value] of Object.entries(val)) {
+                            console.log(key, value)
                             if (key == '@type') { innerClass.val(value).parent().css('display', 'block'); }
                             if (idx == 1) {
                                 if (val[key]['@value']) {
