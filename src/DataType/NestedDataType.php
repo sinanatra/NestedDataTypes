@@ -179,21 +179,23 @@ class NestedDataType extends Literal
 
         foreach ($properties[0] as $key => $val) {
             foreach ($val as $innerKey => $innerVal) {
-                if($innerVal['@value']){
-                    $values[$key] = $innerVal['@value'];
-                    continue;
-                }
-                if($innerVal['label']){
-                    $values[$key] = $innerVal['label'];
-                    continue;
-                }
-                foreach ($innerVal as $secondKey => $secondVal) {
-                    $values[$key] = $secondVal['@value'];
-                    if($secondVal['@value']){
-                        $values[$key] = $secondVal['@value'];
+                if(!$innerVal['is_hidden']){
+                    if($innerVal['@value']){
+                        $values[$key] = $innerVal['@value'];
+                        continue;
                     }
-                    if($secondVal['label']){
-                        $values[$key] = $secondVal['label'];
+                    if($innerVal['label']){
+                        $values[$key] = $innerVal['label'];
+                        continue;
+                    }
+                    foreach ($innerVal as $secondKey => $secondVal) {
+                        $values[$key] = $secondVal['@value'];
+                        if($secondVal['@value']){
+                            $values[$key] = $secondVal['@value'];
+                        }
+                        if($secondVal['label']){
+                            $values[$key] = $secondVal['label'];
+                        }
                     }
                 }
             }
