@@ -1,5 +1,3 @@
-
-
 $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
@@ -9,14 +7,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const defaultValue = thisValue.find('.nested-data-type_value').val('value');
     const defaultProperty = thisValue.find('.nested-data-type_property').val('value');
 
-    let select, textareaValue, textareaUri;
+    let repeatProperty, select, textareaValue, textareaUri;
     const findItems = () => {
-        select = container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_property_dropdown');
-        textareaValue = container.find('.nested-data-type_repeat_property').last().find('.property-value');
-        textareaUri = container.find('.nested-data-type_repeat_property').last().find('.property-uri');
-        innerClass = container.find('.nested-data-type_repeat_property').last().find('.inner-class');
-        innerProperty = container.find('.nested-data-type_repeat_property').last().find('.inner-property');
-        renderedLink = container.find('.nested-data-type_repeat_property').last().find('.items');
+        repeatProperty = container.find('.nested-data-type_repeat_property').last();
+        isHidden = repeatProperty.find('.nested-data-type_is-hidden');
+        select = repeatProperty.find('.nested-data-type_property_dropdown');
+        textareaValue = repeatProperty.find('.property-value');
+        textareaUri = repeatProperty.find('.property-uri');
+        innerClass = repeatProperty.find('.inner-class');
+        innerProperty = repeatProperty.find('.inner-property');
+        renderedLink = repeatProperty.find('.items');
     }
 
     const cloneItem = () => {
@@ -36,17 +36,43 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             textareaUri.parent().parent().css('display', 'block')
         }
 
-        select.attr({ 'data-value-key': `property-label-${num + 1}` }).val('');
-        textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` }).val('');
-        textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` }).val('');
-        innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` }).val('');
-        innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` }).val('');
+        structureField(isHidden, `is-hidden-${num + 1}`);
+        structureField(select, `property-label-${num + 1}`);
+        structureField(textareaValue, `property-value-${num + 1}`);
+        structureField(textareaUri, `property-uri-${num + 1}`);
+        structureField(innerClass, `inner-class-${num + 1}`);
+        structureField(innerProperty, `inner-property-${num + 1}`);
+
+        // repeatProperty.attr({ 'data-value-key': `is-hidden-${num + 1}` }).val('');
+        // select.attr({ 'data-value-key': `property-label-${num + 1}` }).val('');
+        // textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` }).val('');
+        // textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` }).val('');
+        // innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` }).val('');
+        // innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` }).val('');
     });
 
     // Remove Button on click
     container.on('click', '.nested-data-type_remove_property', function (e) {
         e.preventDefault();
         $(this).parent().remove();
+    });
+
+    // Show properties on click
+    container.on('click', '.nested-data-type_hide_property', function (e) {
+        e.preventDefault();
+        const isHiddenInput = $(this).parent().find('.nested-data-type_is-hidden');
+        const dataKey = isHiddenInput.attr('data-value-key');
+        const hide = isHiddenInput.attr({ 'data-value-key': dataKey }).val();
+
+        if (hide != "true") {
+            $(this).removeClass('o-icon-public').addClass('o-icon-private');
+            isHiddenInput.attr({ 'data-value-key': dataKey }).val("true");
+        }
+        else {
+            $(this).removeClass('o-icon-private').addClass('o-icon-public');
+            isHiddenInput.attr({ 'data-value-key': dataKey }).val("");
+        }
+
     });
 
     // Add Class on click
@@ -105,6 +131,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 textareaUri.parent().parent().css('display', 'block')
                             }
 
+                            structureField(isHidden, `is-hidden-${idx}`);
                             structureField(textareaValue, `property-value-${idx}`);
                             structureField(textareaUri, `property-uri-${idx}`);
                             structureField(select, `property-label-${idx}`, insertVal = element);
@@ -208,11 +235,12 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 textareaUri.parent().parent().css('display', 'block')
             }
 
-            select.attr({ 'data-value-key': `property-label-${num + 1}` }).val('');
-            textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` }).val(label)
-            textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` }).val(id)
-            innerClass.attr({ 'data-value-key': `inner-class-${num + 1}` }).val('');
-            innerProperty.attr({ 'data-value-key': `inner-property-${num + 1}` }).val('');
+            structureField(isHidden, `is-hidden-${idx}`);
+            structureField(select, `property-label-${num + 1}`);
+            structureField(textareaValue, `property-value-${num + 1}`, insertVal = label);
+            structureField(textareaUri, `property-uri-${num + 1}`, insertVal = id);
+            structureField(innerClass, `inner-class-${num + 1}`);
+            structureField(innerProperty, `inner-property-${num + 1}`);
 
             container.find('.nested-data-type_repeat_property')
                 .last()
@@ -254,6 +282,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 textareaUri.parent().parent().css('display', 'block')
             }
 
+            repeatProperty.attr({ 'data-value-key': `is-hidden-${num + 1}` }).val('');
             select.attr({ 'data-value-key': `property-label-${num + 1}` }).val('');
             textareaValue.attr({ 'data-value-key': `property-value-${num + 1}` }).val(label)
             textareaUri.attr({ 'data-value-key': `property-uri-${num + 1}` }).val(id)
