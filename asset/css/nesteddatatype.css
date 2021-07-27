@@ -2,6 +2,10 @@
     margin-left: 10px;
 }
 
+.nested-data-type_repeat_property {
+    min-height: 120px;
+}
+
 .nested-data-type_entity_label {
     padding-left: 5px;
     font-weight: 500;
@@ -25,13 +29,13 @@
 }
 
 .o-icon-delete.nested-data-type_remove_property, .nested-data-type_hide_property {
-    display: block;
+    /* display: block; */
     right: -25px;
     margin-top: -35px !important;
     width: fit-content;
     color: #cdcdcd;
     cursor: pointer;
-    position: absolute;
+    /* position: absolute; */
 }
 
 .nested-data-type_hide_property {

@@ -29,7 +29,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     const structureInnerLinks = (insertVal, url) => {
         let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal}</a></div>`
-        container.append(container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_is-hidden').before(link));
+        container.append(container.find('.nested-data-type_repeat_property').last().append(link));
     }
 
     // Add item on click
@@ -51,6 +51,12 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         structureField(textareaUri, `property-uri-${num + 1}`);
         structureField(innerClass, `inner-class-${num + 1}`);
         structureField(innerProperty, `inner-property-${num + 1}`);
+
+        container.find('.nested-data-type_repeat_property')
+            .last()
+            .find('.o-icon-private')
+            .removeClass('o-icon-private')
+            .addClass('o-icon-public')
     });
 
     // Remove Button on click
@@ -67,16 +73,13 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const hide = isHiddenInput.attr({ 'data-value-key': dataKey }).val();
 
         if (hide != "true") {
-            console.log('true')
             $(this).removeClass('o-icon-public').addClass('o-icon-private');
             isHiddenInput.attr({ 'data-value-key': dataKey }).val("true");
         }
         else {
-            console.log('false')
             $(this).removeClass('o-icon-private').addClass('o-icon-public');
             isHiddenInput.attr({ 'data-value-key': dataKey }).val("");
         }
-
     });
 
     // Add Class on click
@@ -99,13 +102,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 for (i in item) {
                     let val = item[i];
                     if (typeof val === "object") {
-                        if (idx == 1 ) {
+                        if (idx == 1) {
                             findItems();
                             select.val(element);
                             if (val['@value']) textareaValue.val(val['@value']);
                             if (val['label']) textareaValue.val(val['label']);
                             if (val['@id']) textareaUri.val(val['@id']);
-                            if (val['is_hidden']) container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private');
+                            if (val['is_hidden']) {
+                                structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
+                                container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
+                            };
                             if (val['@id'] && val['@id'].includes('/api/items/')) {
 
                                 container.find('.nested-data-type_repeat_property')
@@ -137,7 +143,10 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             innerClass.parent().css('display', 'none');
                             structureField(innerProperty, `inner-property-${idx}`);
 
-                            if (val['is_hidden']) container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private');
+                            if (val['is_hidden']) {
+                                structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
+                                container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
+                            };
                             if (val['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['@value']); };
                             if (val['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['label']); }
                             if (val['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val['@id']); }
@@ -187,7 +196,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             else if (idx > 1 && key != "is_hidden") {
 
                                 structureField(innerProperty, `inner-property-${idx}`, insertVal = key);
-                                if (key == '@type') { structureField(innerClass, `inner-class-${idx}`, insertVal = value);};
+                                if (key == '@type') { structureField(innerClass, `inner-class-${idx}`, insertVal = value); };
                                 if (val[key]['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['@value']); }
                                 if (val[key]['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['label']); }
                                 if (val[key]['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val[key]['@id']); };
@@ -251,13 +260,19 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 .find('.o-title.items')
                 .remove();
 
+            container.find('.nested-data-type_repeat_property')
+                .last()
+                .find('.o-icon-private')
+                .removeClass('o-icon-private')
+                .addClass('o-icon-public')
+
             structureInnerLinks(label, url);
         };
     });
 
     $(document).on('click', '.nested-data-type__resource_multiple', function (e) {
         e.preventDefault();
-        let checkbox = $('.items  input:checked').parent().parent();
+        let checkbox = $('.items input:checked').parent().parent();
         cloneItem();
         findItems();
 
@@ -281,7 +296,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 textareaUri.parent().parent().css('display', 'block')
             }
 
-            structureField(isHidden, `is-hidden-${idx}`);
+            structureField(isHidden, `is-hidden-${num + 1}`);
             structureField(select, `property-label-${num + 1}`);
             structureField(textareaValue, `property-value-${num + 1}`, insertVal = label);
             structureField(textareaUri, `property-uri-${num + 1}`, insertVal = id);
@@ -298,10 +313,15 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 .find('.o-title.items')
                 .remove();
 
+            container.find('.nested-data-type_repeat_property')
+                .last()
+                .find('.o-icon-private')
+                .removeClass('o-icon-private')
+                .addClass('o-icon-public')
+
             for (let index = 0; index < id.length; index++) {
                 const singleUrl = url[index];
                 const singleLabel = label[index];
-
                 structureInnerLinks(singleLabel, singleUrl);
             }
         };
