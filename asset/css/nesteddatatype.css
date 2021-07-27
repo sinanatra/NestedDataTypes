@@ -24,21 +24,19 @@
     box-shadow: none;
 }
 
-.nested-data-type_properties .actions {
+.o-icon-delete.nested-data-type_remove_property, .nested-data-type_hide_property {
     display: block;
-    right: -50px;
-    margin-top: -70px !important;
-    width: 50px;
+    right: -25px;
+    margin-top: -35px !important;
+    width: fit-content;
+    color: #cdcdcd;
     cursor: pointer;
     position: absolute;
 }
 
-button.nested-data-type_button.nested-data-type_hide_property.o-icon-private {
-    right: -3px;
-}
-
-.nested-data-type_properties .actions button {
-    color: #cdcdcd !important;
+.nested-data-type_hide_property {
+    margin-top: -73px !important;
+    right: -27px;
 }
 
 .nested-data-type_repeat_class {

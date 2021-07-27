@@ -29,7 +29,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     const structureInnerLinks = (insertVal, url) => {
         let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal}</a></div>`
-        container.append(container.find('.nested-data-type_repeat_property').last().find('.actions').before(link));
+        container.append(container.find('.nested-data-type_repeat_property').last().find('.nested-data-type_is-hidden').before(link));
     }
 
     // Add item on click
@@ -67,10 +67,12 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         const hide = isHiddenInput.attr({ 'data-value-key': dataKey }).val();
 
         if (hide != "true") {
+            console.log('true')
             $(this).removeClass('o-icon-public').addClass('o-icon-private');
             isHiddenInput.attr({ 'data-value-key': dataKey }).val("true");
         }
         else {
+            console.log('false')
             $(this).removeClass('o-icon-private').addClass('o-icon-public');
             isHiddenInput.attr({ 'data-value-key': dataKey }).val("");
         }
