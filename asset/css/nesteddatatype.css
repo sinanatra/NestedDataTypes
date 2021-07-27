@@ -1,5 +1,5 @@
 .ml {
-    margin-left: 10px;;
+    margin-left: 10px;
 }
 
 .nested-data-type_entity_label {
@@ -24,14 +24,21 @@
     box-shadow: none;
 }
 
-.o-icon-delete.nested-data-type_remove_property {
-    position: absolute;
-    left: 100%;
-    margin-left: 10px;
-    margin-top: -30px;
-    width: fit-content;
-    color: #cdcdcd;
+.nested-data-type_properties .actions {
+    display: block;
+    right: -50px;
+    margin-top: -70px !important;
+    width: 50px;
     cursor: pointer;
+    position: absolute;
+}
+
+button.nested-data-type_button.nested-data-type_hide_property.o-icon-private {
+    right: -3px;
+}
+
+.nested-data-type_properties .actions button {
+    color: #cdcdcd !important;
 }
 
 .nested-data-type_repeat_class {

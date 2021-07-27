@@ -29,7 +29,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     const structureInnerLinks = (insertVal, url) => {
         let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal}</a></div>`
-        container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+        container.append(container.find('.nested-data-type_repeat_property').last().find('.actions').before(link));
     }
 
     // Add item on click
@@ -232,7 +232,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                 textareaUri.parent().parent().css('display', 'block')
             }
 
-            structureField(isHidden, `is-hidden-${idx}`);
+            structureField(isHidden, `is-hidden-${num + 1}`);
             structureField(select, `property-label-${num + 1}`);
             structureField(textareaValue, `property-value-${num + 1}`, insertVal = label);
             structureField(textareaUri, `property-uri-${num + 1}`, insertVal = id);
