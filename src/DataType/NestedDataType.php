@@ -118,7 +118,8 @@ class NestedDataType extends Literal
     }
 
     public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
-        
+        $serviceLocator = $adapter->getServiceLocator();
+
         $prevLabel = '';
         $num = 0;
         
@@ -147,6 +148,16 @@ class NestedDataType extends Literal
                 $val = $valueObject["property-value-$idx"];
                 $uri = $valueObject["property-uri-$idx"];
                 
+                // Update title from Omeka Id - to be cleaned.
+                if (strpos($uri, '/api/items/') !== false) {
+                    try {
+                        $str = explode("/api/items/", $uri);
+                        $api = $serviceLocator->get('Omeka\ApiManager');
+                        $response = $api->read('items', $str[1]);
+                        $val = $response->getContent()->displayTitle();
+                    } catch (\Throwable $th) {}
+                }
+
                 $innerClass = $valueObject["inner-class-$idx"];
                 $innerProp = $valueObject["inner-property-$idx"];
                 $isHidden = $valueObject["is-hidden-$idx"];
