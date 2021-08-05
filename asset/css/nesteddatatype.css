@@ -55,14 +55,16 @@
     position: absolute;
     display: block;
     right: -25px;
-    top: 50%;
+    /* top: 50%; */
+    top: 80px;
     width: fit-content;
     color: #cdcdcd;
     cursor: pointer;
 }
 
 .nested-data-type_hide_property {
-    top: 20%;
+    /* top: 20%; */
+    top: 40px;
     right: -27px;
 }
 
