@@ -70,7 +70,7 @@ class NestedDataType extends Literal
                             $values[$key] = $innerVal['@value'];
                             continue;
                         }
-                        if(isset($innerVal['@label'])){
+                        if(isset($innerVal['label'])){
                             $values[$key] = $innerVal['label'];
                             continue;
                         }
@@ -199,7 +199,7 @@ class NestedDataType extends Literal
                             $values[$key] = $innerVal['@value'];
                             continue;
                         }
-                        if(isset($innerVal['@label'])){
+                        if(isset($innerVal['label'])){
                             $values[$key] = $innerVal['label'];
                             continue;
                         }
