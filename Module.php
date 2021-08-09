@@ -109,26 +109,28 @@ class Module extends AbstractModule
             $properties = json_decode($title, true);
 
             $event->setParam('title', (string) $title);
-            if( $properties[0]['@type']) {
+            if(isset($properties[0]['@type'])){
                 $values = [];
                 
                 foreach ($properties[0] as $key => $val) {
-                    foreach ($val as $innerKey => $innerVal) {
-                        if($innerVal['@value']){
-                            $values[$key] = $innerVal['@value'];
-                            continue;
-                        }
-                        if($innerVal['label']){
-                            $values[$key] = $innerVal['label'];
-                            continue;
-                        }
-                        foreach ($innerVal as $secondKey => $secondVal) {
-                            $values[$key] = $secondVal['@value'];
-                            if($secondVal['@value']){
-                                $values[$key] = $secondVal['@value'];
+                    if (is_array($val) || is_object($val)){
+                        foreach ($val as $innerKey => $innerVal) {
+                            if($innerVal['@value']){
+                                $values[$key] = $innerVal['@value'];
+                                continue;
                             }
-                            if($secondVal['label']){
-                                $values[$key] = $secondVal['label'];
+                            if($innerVal['label']){
+                                $values[$key] = $innerVal['label'];
+                                continue;
+                            }
+                            foreach ($innerVal as $secondKey => $secondVal) {
+                                $values[$key] = $secondVal['@value'];
+                                if($secondVal['@value']){
+                                    $values[$key] = $secondVal['@value'];
+                                }
+                                if($secondVal['label']){
+                                    $values[$key] = $secondVal['label'];
+                                }
                             }
                         }
                     }

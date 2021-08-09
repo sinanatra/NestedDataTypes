@@ -63,23 +63,24 @@ class NestedDataType extends Literal
         $values = [];
 
         foreach ($properties[0] as $key => $val) {
-            foreach ($val as $innerKey => $innerVal) {
-                if(!$innerVal['is_hidden']){
-                    if($innerVal['@value']){
-                        $values[$key] = $innerVal['@value'];
-                        continue;
-                    }
-                    if($innerVal['label']){
-                        $values[$key] = $innerVal['label'];
-                        continue;
-                    }
-                    foreach ($innerVal as $secondKey => $secondVal) {
-                        $values[$key] = $secondVal['@value'];
-                        if($secondVal['@value']){
-                            $values[$key] = $secondVal['@value'];
+            if (is_array($val) || is_object($val)){
+                foreach ($val as $innerKey => $innerVal) {
+                    if(!isset($innerVal['is_hidden'])){
+                        if(isset($innerVal['@value'])){
+                            $values[$key] = $innerVal['@value'];
+                            continue;
                         }
-                        if($secondVal['label']){
-                            $values[$key] = $secondVal['label'];
+                        if(isset($innerVal['@label'])){
+                            $values[$key] = $innerVal['label'];
+                            continue;
+                        }
+                        foreach ($innerVal as $secondKey => $secondVal) {
+                           if(isset($secondVal['@value'])){
+                                $values[$key] = $secondVal['@value'];
+                            }
+                            if(isset($secondVal['label'])){
+                                $values[$key] = $secondVal['label'];
+                            }
                         }
                     }
                 }
@@ -189,23 +190,24 @@ class NestedDataType extends Literal
         $values = [];
 
         foreach ($properties[0] as $key => $val) {
-            foreach ($val as $innerKey => $innerVal) {
-                if(!$innerVal['is_hidden']){
-                    if($innerVal['@value']){
-                        $values[$key] = $innerVal['@value'];
-                        continue;
-                    }
-                    if($innerVal['label']){
-                        $values[$key] = $innerVal['label'];
-                        continue;
-                    }
-                    foreach ($innerVal as $secondKey => $secondVal) {
-                        $values[$key] = $secondVal['@value'];
-                        if($secondVal['@value']){
-                            $values[$key] = $secondVal['@value'];
+            if (is_array($val) || is_object($val)){
+                foreach ($val as $innerKey => $innerVal) {
+                    if(!isset($innerVal['is_hidden'])){
+                        if(isset($innerVal['@value'])){
+                            $values[$key] = $innerVal['@value'];
+                            continue;
                         }
-                        if($secondVal['label']){
-                            $values[$key] = $secondVal['label'];
+                        if(isset($innerVal['@label'])){
+                            $values[$key] = $innerVal['label'];
+                            continue;
+                        }
+                        foreach ($innerVal as $secondKey => $secondVal) {
+                           if(isset($secondVal['@value'])){
+                                $values[$key] = $secondVal['@value'];
+                            }
+                            if(isset($secondVal['label'])){
+                                $values[$key] = $secondVal['label'];
+                            }
                         }
                     }
                 }
