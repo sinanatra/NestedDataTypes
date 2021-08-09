@@ -74,12 +74,14 @@ class NestedDataType extends Literal
                             $values[$key] = $innerVal['label'];
                             continue;
                         }
-                        foreach ($innerVal as $secondKey => $secondVal) {
-                           if(isset($secondVal['@value'])){
-                                $values[$key] = $secondVal['@value'];
-                            }
-                            if(isset($secondVal['label'])){
-                                $values[$key] = $secondVal['label'];
+                        if (is_array($innerVal) || is_object($innerVal)){
+                            foreach ($innerVal as $secondKey => $secondVal) {
+                            if(isset($secondVal['@value'])){
+                                    $values[$key] = $secondVal['@value'];
+                                }
+                                if(isset($secondVal['label'])){
+                                    $values[$key] = $secondVal['label'];
+                                }
                             }
                         }
                     }
