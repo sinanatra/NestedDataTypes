@@ -125,8 +125,8 @@ class NestedDataType extends Literal
 
         $prevLabel = '';
         $num = 0;
-        
-        if( array_column($valueObject['@value'], '@type')) {
+
+        if(strpos($valueObject['@value'],'@type') !== false){
             $value->setValue(json_encode($valueObject['@value']));
         }
         else {
