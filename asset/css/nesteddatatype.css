@@ -3,7 +3,7 @@
 }
 
 .nested-data-type_repeat_property {
-    min-height: 100px;
+    /* min-height: 100px; */
     position: relative;
 }
 
@@ -82,9 +82,14 @@
     border-radius: 0;
 }
 
+.nested-data-type_repeat_property_list {
+    display: inline-flex;
+    width: 100%;
+}
+
 .nested-data-type-dropwdown {
     padding-left: 6px;
-    width: calc(100% - 20px);
+    width: calc(100% - 30px);
     background: none;
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.35);
@@ -100,7 +105,9 @@
     font-size: .75rem;
     height: fit-content;
     border-radius: 0;
-    width: 15px;
+    width: 30px;
+    background: rgba(0,0,0,0.05);
+    vertical-align: bottom;
 }
 
 .nested-data-type_property_dropdown::-webkit-calendar-picker-indicator {
