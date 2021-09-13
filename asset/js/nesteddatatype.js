@@ -85,8 +85,8 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     // Add Class on click
     container.on('click', '.nested-data-type_add_class', function (e) {
         e.preventDefault();
-        $(this).next().children().val('')
-        $(this).next().toggle();
+        $(this).parent().next().children().val('')
+        $(this).parent().next().toggle();
     });
 
 
