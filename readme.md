@@ -15,7 +15,7 @@ For instance:
 
 Can be structured as a multi input field:
 
-![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/1d1100c29d5ed0a96c6a29cdf548464e05f4448d/img.png)
+![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/ab3b399034b457b81a950b8d0471ea843de30484/img.png)
 
 The module adds a `properties` key to the json-ld Omeka S provides, and it keeps the `@value` key, for basic processing.
 Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` property, which can be activated by clicking on the eye icon.
