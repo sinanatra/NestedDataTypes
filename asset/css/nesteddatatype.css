@@ -3,7 +3,7 @@
 }
 
 .nested-data-type_repeat_property {
-    /* min-height: 100px; */
+    min-height: 80px;
     position: relative;
 }
 
@@ -56,7 +56,7 @@
     display: block;
     right: -25px;
     /* top: 50%; */
-    top: 80px;
+    top: 60px;
     width: fit-content;
     color: #cdcdcd;
     cursor: pointer;
@@ -64,7 +64,7 @@
 
 .nested-data-type_hide_property {
     /* top: 20%; */
-    top: 40px;
+    top: 30px;
     right: -27px;
 }
 
