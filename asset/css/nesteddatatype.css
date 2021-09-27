@@ -5,11 +5,13 @@
 .nested-data-type_repeat_property {
     min-height: 80px;
     position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
 .nested-data-type_entity_label {
     padding-left: 5px;
     font-weight: 800;
+    background: rgba(0,0,0,0.1);
     border-bottom: 1px solid rgba(0,0,0,0.10);
 }
 
@@ -117,6 +119,10 @@
 
 .nested-data-type_properties .input {
     border-bottom: 1px solid rgba(0,0,0,0.35);
+}
+
+.nested-data-type_properties .input ~ .input {
+    border-bottom: unset;
 }
 
 .nested-data-type_properties .input label {
