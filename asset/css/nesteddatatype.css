@@ -3,9 +3,11 @@
 }
 
 .nested-data-type_repeat_property {
-    min-height: 80px;
     position: relative;
-    border-bottom: 1px solid rgba(0,0,0,0.35);
+}
+
+.hidden, .hidden .value-uri {
+    display: none !important;
 }
 
 .nested-data-type_entity_label {
@@ -16,9 +18,7 @@
 }
 
 .nested-data-type_repeat_property option, .nested-data-type_repeat_property input {
-    /* font-style: italic; */
-    /* font-size: 14px; */
-    color: rgb(0 0 0 / 50%);
+    color: rgb(0 0 0 / 35%);
 }
 
 .nested-data-type_add_property {
@@ -128,7 +128,7 @@
 .nested-data-type_properties .input label {
     z-index: 1;
     display: flex;
-    padding: 6px 0 6px 6px;
+    /* padding: 6px 0 6px 6px; */
     width: auto;
     font-weight: bold;
     color: rgba(0,0,0,0.35);
@@ -141,10 +141,14 @@
     padding: 6px;
     font-weight: normal;
     background: transparent;
-    min-height: 36px !important;
+    min-height: 54px !important;
 }
 
 .nested-data-type_properties .items a:after {
     font-family: "Font Awesome 5 Free";
     content: " \f1b2";
+}
+
+.o-title.items {
+    line-height: 1.6rem;
 }
