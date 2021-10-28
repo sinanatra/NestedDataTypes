@@ -15,7 +15,7 @@ For instance:
 
 Can be structured as a multi input field:
 
-![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/ab3b399034b457b81a950b8d0471ea843de30484/img.png)
+![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/5ffa98b47e96a9225ed4d80340684d8036c67e89/img.png)
 
 The module adds a `properties` key to the json-ld Omeka S provides, and it keeps the `@value` key, for basic processing.
 Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` property, which can be activated by clicking on the eye icon.
@@ -32,7 +32,7 @@ Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` 
             "@type": "crm:E54_Dimension",
             "crm:P2_has_type": [
                 {
-                    "@id": "http://vocab.getty.edu/aat/300055647",
+                    "@id": "http://localhost:8080/api/items/23685",
                     "label": "width"
                 }
             ],
@@ -43,15 +43,8 @@ Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` 
             ],
             "crm:P91_has_unit": [
                 {
-                    "@id": "http://vocab.getty.edu/aat/300379098",
-                    "label": "centimeters",
-                }
-            ],
-             "crm:P70i_is_documented_in": [
-                {
-                   "@id": "http://localhost:8080/api/items/3917",
-                   "label": "Q1",
-                   "is_hidden": "true"
+                    "@id": "http://localhost:8080/api/items/23686",
+                    "label": "centimeters"
                 }
             ]
         }
