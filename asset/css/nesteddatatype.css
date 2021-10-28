@@ -4,6 +4,7 @@
 
 .nested-data-type_repeat_property {
     position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
 .hidden, .hidden .value-uri {
@@ -115,10 +116,6 @@
 
 .nested-data-type_property_dropdown::-webkit-calendar-picker-indicator {
     opacity: 100;
-}
-
-.nested-data-type_properties .input {
-    border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
 .nested-data-type_properties .input ~ .input {

@@ -69,10 +69,9 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         for (let index = 0; index < nextItems.length; index++) {
             const element = $(nextItems[index]).find("input[data-value-key]");
             for (let item = 0; item < element.length; item++) {
-                const value = element[item].getAttribute('data-value-key');       
                 const dataValueKey = $(element[item]).attr('data-value-key').split('-');
                 const updatedIndex = dataValueKey.join('-') + "-" + (dataValueKey.pop() - 1);
-                structureField($(element[item]), updatedIndex).val(value);
+                structureField($(element[item]), updatedIndex, insertVal = element[item].value)
             }
         }
     });
