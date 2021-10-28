@@ -144,11 +144,12 @@
     min-height: 54px !important;
 }
 
+.o-title.items {
+    line-height: 1.6rem;
+    min-height: 54px !important;
+}
+
 .nested-data-type_properties .items a:after {
     font-family: "Font Awesome 5 Free";
     content: " \f1b2";
-}
-
-.o-title.items {
-    line-height: 1.6rem;
 }

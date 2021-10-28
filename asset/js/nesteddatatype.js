@@ -62,7 +62,19 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     // Remove Button on click
     container.on('click', '.nested-data-type_remove_property', function (e) {
         e.preventDefault();
+        const nextItems = $(this).parent().nextAll();
         $(this).parent().remove();
+
+        // change the index number
+        for (let index = 0; index < nextItems.length; index++) {
+            const element = $(nextItems[index]).find("input[data-value-key]");
+            for (let item = 0; item < element.length; item++) {
+                const value = element[item].getAttribute('data-value-key');       
+                const dataValueKey = $(element[item]).attr('data-value-key').split('-');
+                const updatedIndex = dataValueKey.join('-') + "-" + (dataValueKey.pop() - 1);
+                structureField($(element[item]), updatedIndex).val(value);
+            }
+        }
     });
 
     // Show properties on click
@@ -119,7 +131,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                     .find('.input')
                                     .css('display', 'none');
 
-                                structureInnerLinks(val[key]['label'], insertVal['@id'].replace('/api/items/', '/admin/item/'));
+                                structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
                             }
                         }
 
