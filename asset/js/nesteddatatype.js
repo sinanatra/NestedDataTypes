@@ -42,7 +42,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         if (renderedLink) {
             renderedLink.remove();
             textareaValue.parent().parent().css('display', 'block');
-            textareaUri.parent().parent().css('display', 'block')
+            // textareaUri.parent().parent().css('display', 'block')
         }
 
         structureField(isHidden, `is-hidden-${num + 1}`);
@@ -143,7 +143,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             if (renderedLink) {
                                 renderedLink.remove();
                                 textareaValue.parent().parent().css('display', 'block');
-                                textareaUri.parent().parent().css('display', 'block')
+                                // textareaUri.parent().parent().css('display', 'block')
                             }
 
                             structureField(isHidden, `is-hidden-${idx}`);
@@ -251,7 +251,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             if (renderedLink) {
                 renderedLink.remove();
                 textareaValue.parent().parent().css('display', 'block');
-                textareaUri.parent().parent().css('display', 'block')
+                // textareaUri.parent().parent().css('display', 'block')
             }
 
             structureField(isHidden, `is-hidden-${num + 1}`);

@@ -7,8 +7,8 @@
     border-bottom: 1px solid rgba(0,0,0,0.35);
 }
 
-.hidden, .hidden .value-uri {
-    display: none !important;
+.hidden, .hidden, .hidden .value-uri {
+    display: none;
 }
 
 .nested-data-type_entity_label {
@@ -133,7 +133,8 @@
 
 .nested-data-type_properties .input textarea {
     margin: -6px 0 -6px 0;
-    height: 36px;
+    /* height: 36px; */
+    /* color: #222; */
     border: 0;
     padding: 6px;
     font-weight: normal;
