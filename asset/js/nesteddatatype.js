@@ -124,6 +124,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         try {
             const properties = valueObj.properties;
             const keys = Object.keys(properties[0]);
+
             keys.forEach((element, idx) => {
                 let item = properties[0][element];
 
@@ -162,6 +163,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                 textareaValue.parent().parent().css('display', 'block');
                             }
 
+                            structureField(select, `property-label-${idx}`, insertVal = element);
                             innerClass.parent().css('display', 'none');
 
                             if (val['is_hidden']) {
@@ -210,12 +212,10 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                                         .last()
                                         .find('.input')
                                         .css('display', 'none');
-
-                                    structureInnerLinks(val[key]['label'], val['@id'].replace('/api/items/', '/admin/item/'));
+                                    structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
                                 }
                             }
                             else if (idx > 1 && key != "is_hidden") {
-
                                 structureField(innerProperty, `inner-property-${idx}`, insertVal = key);
                                 if (key == '@type') { structureField(innerClass, `inner-class-${idx}`, insertVal = value); };
                                 if (val[key]['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['@value']); }
