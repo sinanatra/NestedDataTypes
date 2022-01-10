@@ -19,8 +19,33 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         renderedLink = repeatProperty.find('.items');
     }
 
-    const cloneItem = () => {
-        container.append(container.find('.nested-data-type_repeat_property').last().clone());
+    const cloneItem = (idx) => {
+        let item = `
+        <div class="nested-data-type_repeat_property">
+            <div class="nested-data-type_repeat_property_list">
+                <input class="nested-data-type-dropwdown nested-data-type_property_dropdown" list="property-dropdown" data-value-key="property-label-${idx}" placeholder="Select a property" />
+                <button class="nested-data-type_button o-icon-add nested-data-type_add_class"></button>
+            </div>
+            <div class="nested-data-type_repeat_class hidden">
+                <input class="nested-data-type-dropwdown inner-class" list="class-dropdown" data-value-key="inner-class-${idx}" placeholder="Select a class" />
+                <input class="nested-data-type-dropwdown inner-property" list="property-dropdown" data-value-key="inner-property-${idx}" placeholder="Select a property" />
+            </div>
+            <div class="input">
+                <label class="value">
+                    <textarea class="property-value" name="property-value" data-value-key="property-value-${idx}"></textarea>
+                </label>
+            </div>
+            <div class="input hidden">
+                <label class="value-uri">
+                    <textarea class="property-uri" name="property-uri" data-value-key="property-uri-${idx}"></textarea>
+                </label>
+            </div>
+            <input type="hidden" class="nested-data-type_is-hidden" data-value-key="is-hidden-${idx}" />
+            <button class="nested-data-type_button o-icon-public nested-data-type_hide_property"></button>
+            <button class="nested-data-type_button o-icon-delete nested-data-type_remove_property"></button>
+        </div>`;
+
+            container.append(container.append(item));
     }
 
     const structureField = (obj, type, insertVal = '') => {
@@ -36,21 +61,13 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     addBtn.on('click', function (e) {
         e.preventDefault();
         const num = container.find('.nested-data-type_repeat_property').length;
-        cloneItem();
+        cloneItem(num + 1);
         findItems();
 
         if (renderedLink) {
             renderedLink.remove();
             textareaValue.parent().parent().css('display', 'block');
-            // textareaUri.parent().parent().css('display', 'block')
         }
-
-        structureField(isHidden, `is-hidden-${num + 1}`);
-        structureField(select, `property-label-${num + 1}`);
-        structureField(textareaValue, `property-value-${num + 1}`);
-        structureField(textareaUri, `property-uri-${num + 1}`);
-        structureField(innerClass, `inner-class-${num + 1}`);
-        structureField(innerProperty, `inner-property-${num + 1}`);
 
         container.find('.nested-data-type_repeat_property')
             .last()
@@ -135,7 +152,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                         }
 
                         else if (idx > 1) {
-                            cloneItem();
+                            cloneItem(idx);
                             findItems();
 
                             container.find('.nested-data-type_hide_property').last().removeClass('o-icon-private').addClass('o-icon-public');
@@ -143,16 +160,9 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
                             if (renderedLink) {
                                 renderedLink.remove();
                                 textareaValue.parent().parent().css('display', 'block');
-                                // textareaUri.parent().parent().css('display', 'block')
                             }
 
-                            structureField(isHidden, `is-hidden-${idx}`);
-                            structureField(textareaValue, `property-value-${idx}`);
-                            structureField(textareaUri, `property-uri-${idx}`);
-                            structureField(select, `property-label-${idx}`, insertVal = element);
-                            structureField(innerClass, `inner-class-${idx}`);
                             innerClass.parent().css('display', 'none');
-                            structureField(innerProperty, `inner-property-${idx}`);
 
                             if (val['is_hidden']) {
                                 structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
@@ -245,21 +255,16 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         if (thisValue.is('.selecting-resource')) {
             const num = container.find('.nested-data-type_repeat_property').length;
 
-            cloneItem();
+            cloneItem(num + 1);
             findItems();
 
             if (renderedLink) {
                 renderedLink.remove();
                 textareaValue.parent().parent().css('display', 'block');
-                // textareaUri.parent().parent().css('display', 'block')
             }
 
-            structureField(isHidden, `is-hidden-${num + 1}`);
-            structureField(select, `property-label-${num + 1}`);
             structureField(textareaValue, `property-value-${num + 1}`, insertVal = label);
             structureField(textareaUri, `property-uri-${num + 1}`, insertVal = id);
-            structureField(innerClass, `inner-class-${num + 1}`);
-            structureField(innerProperty, `inner-property-${num + 1}`);
 
             container.find('.nested-data-type_repeat_property')
                 .last()
