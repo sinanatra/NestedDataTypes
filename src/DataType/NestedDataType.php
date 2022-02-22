@@ -190,8 +190,14 @@ class NestedDataType extends Literal
         
         $properties = json_decode($value->value(), true);
         $values = [];
-
+        
+        // this cicle will be removed
         foreach ($properties[0] as $key => $val) {
+            
+            if($key == '@type'){
+                $values[$key] =  $val;
+            }
+
             if (is_array($val) || is_object($val)){
                 foreach ($val as $innerKey => $innerVal) {
                     if(!isset($innerVal['is_hidden'])){
@@ -200,7 +206,7 @@ class NestedDataType extends Literal
                             continue;
                         }
                         if(isset($innerVal['label'])){
-                            $values[$key] = $innerVal['label'];
+                            $values[$key] = $innerVal;
                             continue;
                         }
                         if (is_array($innerVal) || is_object($innerVal)){
@@ -209,7 +215,7 @@ class NestedDataType extends Literal
                                     $values[$key] = $secondVal['@value'];
                                 }
                                 if(isset($secondVal['label'])){
-                                    $values[$key] = $secondVal['label'];
+                                    $values[$key] = $secondVal;
                                 }
                             }
                         }
@@ -218,7 +224,29 @@ class NestedDataType extends Literal
             }
         }
 
-        return implode('; ', $values);
+        // return json_encode($values);
+        return "<div class='nested-data-types__value-value-container'>" . implode('', array_map(
+            function ($v, $k) {
+
+                if($k == '@type'){
+                    return "<div class='value-container__type'><strong>" . str_replace("_", " ", explode(":", $v)[1]) . "</strong></div>";
+                }
+
+                if(isset($v['label'])){
+                    $url = explode("items/", $v['@id'])[1];
+                    $v =  "<span class='value__property'><a class='resource-link' href='" . $url . "'><span class='resource-name'>" . $v['label']. "</span></a></span>";
+                }
+                else {
+                    $v =  "<span class='value__property'>" . $v . "</span>";
+                }
+                
+                $k =  "<span class='value__label'><em>" . str_replace("_", " ", explode(":", $k)[1]) . "</em></span>";
+
+                return "<div class='value-container__value'>" . $k . "<span class='value__separator'>" .": " . "</span>" . $v . "</div>";
+            },
+            $values,
+            array_keys($values)
+        )). "</div>";
     }
 }
 
