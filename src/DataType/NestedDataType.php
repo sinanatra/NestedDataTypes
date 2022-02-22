@@ -191,7 +191,7 @@ class NestedDataType extends Literal
         $properties = json_decode($value->value(), true);
         $values = [];
         
-        // this cicle will be removed
+        // this cycle will be removed
         foreach ($properties[0] as $key => $val) {
             
             if($key == '@type'){
