@@ -90,8 +90,8 @@ class NestedDataType extends Literal
         }
 
         $jsonLd = [
-            '@value' => implode('; ', $values),
-            'properties' =>  $properties,
+            '@value' => $properties,
+            // 'properties' =>  $properties,
         ];
 
         return $jsonLd;   

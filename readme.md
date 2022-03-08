@@ -17,7 +17,7 @@ Can be structured as a multi input field:
 
 ![alt text](https://gist.githubusercontent.com/sinanatra/a39c3625f3871c19a7e720d3ceb44339/raw/5ffa98b47e96a9225ed4d80340684d8036c67e89/img.png)
 
-The module adds a `properties` key to the json-ld Omeka S provides, and it keeps the `@value` key, for basic processing.
+The module fills the content of `@value` as json-ld based on the values from the multi input field.
 Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` property, which can be activated by clicking on the eye icon.
 
 ```json
@@ -26,8 +26,7 @@ Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` 
     "property_id": 1262,
     "property_label": "P43 has dimension",
     "is_public": true,
-    "@value": "width 90 centimeters", 
-    "properties": [
+    "@value": [
         {
             "@type": "crm:E54_Dimension",
             "crm:P2_has_type": [
@@ -52,7 +51,7 @@ Specific keys can be ignored when rendering the `@value` with the `"is_hidden"` 
 }
 ```
 
-The `property` values are also structured as JSON-LD that can be easily converted to other semantic web standars:
+The content of `@value` is structured as JSON-LD that can be easily converted to other semantic web standars:
 
 ### RDFXML:
 ```xml
