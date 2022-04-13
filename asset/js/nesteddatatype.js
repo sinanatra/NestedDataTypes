@@ -53,11 +53,17 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     }
 
     const structureInnerLinks = (insertVal, url) => {
-        $.getJSON(url.replace("/admin/item/", "/api/items/"), function (data) {
-            let title = data["o:title"]
-            let link = `<div class="o-title items ml"><a href="${url}"> ${title || insertVal}</a></div>`
-            container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+        let title;
+        
+        $.ajaxSetup({
+            async: false
         });
+        $.getJSON(url.replace("/admin/item/", "/api/items/"), function (data) {
+            title = data["o:title"];
+        });
+
+        let link = `<div class="o-title items ml"><a href="${url}"> ${title || insertVal}</a></div>`
+        container.append(container.find('.nested-data-type_repeat_property').last().append(link));
     }
 
     // Add item on click
