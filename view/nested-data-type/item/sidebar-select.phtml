@@ -66,9 +66,9 @@ $expanded = $resourceClassId || $itemSetId || $id;
     <div class="items resource-list">
         <?php foreach ($items as $item):?>
         <div class="resource item" data-resource-values="<?php echo $escape(json_encode($item->valueRepresentation())); ?>">
-            <div class="select-resource-checkbox-wrapper">
+            <!-- <div class="select-resource-checkbox-wrapper">
                 <input type="checkbox" class="select-resource-checkbox" name="resource_ids[]" value="<?php echo $item->id(); ?>">
-            </div>
+            </div> -->
             <?php
             $content = sprintf(
                 '%s<span class="resource-name">%s</span>',

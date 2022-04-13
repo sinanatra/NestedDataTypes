@@ -59,28 +59,28 @@ class NestedDataType extends Literal
 
     public function getJsonLd(ValueRepresentation $value)
     {    
-        $properties = json_decode($value->value(), true);
-        $values = [];
+        $values= json_decode($value->value(), true);
+        $simpleValue = [];
 
-        foreach ($properties[0] as $key => $val) {
+        foreach ($values[0] as $key => $val) {
             if (is_array($val) || is_object($val)){
                 foreach ($val as $innerKey => $innerVal) {
                     if(!isset($innerVal['is_hidden'])){
                         if(isset($innerVal['@value'])){
-                            $values[$key] = $innerVal['@value'];
+                            $simpleValue[$key] = $innerVal['@value'];
                             continue;
                         }
                         if(isset($innerVal['label'])){
-                            $values[$key] = $innerVal['label'];
+                            $simpleValue[$key] = $innerVal['label'];
                             continue;
                         }
                         if (is_array($innerVal) || is_object($innerVal)){
                             foreach ($innerVal as $secondKey => $secondVal) {
                             if(isset($secondVal['@value'])){
-                                    $values[$key] = $secondVal['@value'];
+                                    $simpleValue[$key] = $secondVal['@value'];
                                 }
                                 if(isset($secondVal['label'])){
-                                    $values[$key] = $secondVal['label'];
+                                    $simpleValue[$key] = $secondVal['label'];
                                 }
                             }
                         }
@@ -90,8 +90,8 @@ class NestedDataType extends Literal
         }
 
         $jsonLd = [
-            '@value' => $properties,
-            // 'properties' =>  $properties,
+            '@value' => $values,
+            'simpleValue' => implode('; ', $simpleValue),
         ];
 
         return $jsonLd;   
@@ -129,6 +129,8 @@ class NestedDataType extends Literal
         if(strpos($valueObject['@value'],'@type') !== false){
             $value->setValue(json_encode($valueObject['@value']));
         }
+
+
         else {
             $properties = [];
 
@@ -188,34 +190,33 @@ class NestedDataType extends Literal
 
     public function render(PhpRenderer $view, ValueRepresentation $value){
         
-        $properties = json_decode($value->value(), true);
-        $values = [];
+        $values = json_decode($value->value(), true);
+        $simpleValue = [];
         
-        // this cycle will be removed
-        foreach ($properties[0] as $key => $val) {
+        foreach ($values[0] as $key => $val) {
             
             if($key == '@type'){
-                $values[$key] =  $val;
+                $simpleValue[$key] =  $val;
             }
 
             if (is_array($val) || is_object($val)){
                 foreach ($val as $innerKey => $innerVal) {
                     if(!isset($innerVal['is_hidden'])){
                         if(isset($innerVal['@value'])){
-                            $values[$key] = $innerVal['@value'];
+                            $simpleValue[$key] = $innerVal['@value'];
                             continue;
                         }
                         if(isset($innerVal['label'])){
-                            $values[$key] = $innerVal;
+                            $simpleValue[$key] = $innerVal;
                             continue;
                         }
                         if (is_array($innerVal) || is_object($innerVal)){
                             foreach ($innerVal as $secondKey => $secondVal) {
                             if(isset($secondVal['@value'])){
-                                    $values[$key] = $secondVal['@value'];
+                                    $simpleValue[$key] = $secondVal['@value'];
                                 }
                                 if(isset($secondVal['label'])){
-                                    $values[$key] = $secondVal;
+                                    $simpleValue[$key] = $secondVal;
                                 }
                             }
                         }
@@ -244,8 +245,8 @@ class NestedDataType extends Literal
 
                 return "<div class='value-container__value'>" . $k . "<span class='value__separator'>" .": " . "</span>" . $v . "</div>";
             },
-            $values,
-            array_keys($values)
+            $simpleValue,
+            array_keys($simpleValue)
         )). "</div>";
     }
 }

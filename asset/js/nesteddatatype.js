@@ -45,7 +45,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             <button class="nested-data-type_button o-icon-delete nested-data-type_remove_property"></button>
         </div>`;
 
-            container.append(container.append(item));
+        container.append(container.append(item));
     }
 
     const structureField = (obj, type, insertVal = '') => {
@@ -53,8 +53,11 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     }
 
     const structureInnerLinks = (insertVal, url) => {
-        let link = `<div class="o-title items ml"><a href="${url}"> ${insertVal}</a></div>`
-        container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+        $.getJSON(url.replace("/admin/item/", "/api/items/"), function (data) {
+            let title = data["o:title"]
+            let link = `<div class="o-title items ml"><a href="${url}"> ${title || insertVal}</a></div>`
+            container.append(container.find('.nested-data-type_repeat_property').last().append(link));
+        });
     }
 
     // Add item on click
@@ -285,4 +288,23 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             structureInnerLinks(label, url);
         };
     });
+
+    // document.querySelector('.nested-data-type_property_dropdown').addEventListener('input', function (e) {
+
+
+
+
+    //     var input = e.target,
+    //         list = input.getAttribute('list'),
+    //         options = document.querySelectorAll('#' + list + ' option[value="' + input.value + '"]'),
+    //         hiddenInput = document.getElementById('property_dropdown-hidden');
+
+    //     if (options.length > 0) {
+    //         hiddenInput.value = input.value;
+    //         input.value = options[0].innerText;
+    //         console.log(hiddenInput,input.value)
+    //     }
+
+    // });
+
 });
