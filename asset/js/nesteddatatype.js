@@ -19,6 +19,8 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         renderedLink = repeatProperty.find('.items');
     }
 
+
+
     const cloneItem = (idx) => {
         let item = `
         <div class="nested-data-type_repeat_property">
@@ -54,7 +56,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     const structureInnerLinks = (insertVal, url) => {
         let title;
-        
+
         $.ajaxSetup({
             async: false
         });
@@ -62,9 +64,14 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             title = data["o:title"];
         });
 
-        let link = `<div class="o-title items ml"><a href="${url}"> ${title || insertVal}</a></div>`
+        let link = `<div class="o-title items ml">
+        <a href="${url}"> ${title || insertVal}</a>
+        <br>
+        <a class="nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select" data-sidebar-content-url="/admin/nested-data-type/sidebar-select" href="#item-resource-select">Update</a>
+        </div>`
         container.append(container.find('.nested-data-type_repeat_property').last().append(link));
     }
+
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -129,128 +136,25 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     // Prepares the fields to be rendered in the frontend
     if (0 === type.indexOf('nesteddatatype#')) {
+        if (valueObj != undefined) {
+            const p = valueObj["@value"];
+            const k = Object.keys(p[0]);
+            renderFields(p, k)
+        }
 
-        try {
-            const properties = valueObj["@value"];
-            const keys = Object.keys(properties[0]);
-
-            keys.forEach((element, idx) => {
-                let item = properties[0][element];
-
-                for (i in item) {
-                    let val = item[i];
-                    if (typeof val === "object") {
-                        if (idx == 1) {
-                            findItems();
-                            select.val(element);
-                            if (val['@value']) textareaValue.val(val['@value']);
-                            if (val['label']) textareaValue.val(val['label']);
-                            if (val['@id']) textareaUri.val(val['@id']);
-                            if (val['is_hidden']) {
-                                structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
-                                container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
-                            };
-                            if (val['@id'] && val['@id'].includes('/api/items/')) {
-
-                                container.find('.nested-data-type_repeat_property')
-                                    .last()
-                                    .find('.input')
-                                    .css('display', 'none');
-
-                                structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
-                            }
-                        }
-
-                        else if (idx > 1) {
-                            cloneItem(idx);
-                            findItems();
-
-                            container.find('.nested-data-type_hide_property').last().removeClass('o-icon-private').addClass('o-icon-public');
-
-                            if (renderedLink) {
-                                renderedLink.remove();
-                                textareaValue.parent().parent().css('display', 'block');
-                            }
-
-                            structureField(select, `property-label-${idx}`, insertVal = element);
-                            innerClass.parent().css('display', 'none');
-
-                            if (val['is_hidden']) {
-                                structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
-                                container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
-                            };
-                            if (val['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['@value']); };
-                            if (val['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['label']); }
-                            if (val['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val['@id']); }
-                            if (val['@id'] && val['@id'].includes('/api/items/')) {
-                                container.find('.nested-data-type_repeat_property')
-                                    .last()
-                                    .find('.o-title.items')
-                                    .remove();
-
-                                container.find('.nested-data-type_repeat_property')
-                                    .last()
-                                    .find('.input')
-                                    .css('display', 'none');
-
-                                structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
-                            }
-                        }
-
-                        for (const [key, value] of Object.entries(val)) {
-                            if (key == '@type') { innerClass.val(value).parent().css('display', 'block') };
-                            if (idx == 1) {
-                                if (val[key]['@value']) {
-                                    innerProperty.val(key);
-                                    innerProperty.parent().css('display', 'block');
-                                    textareaValue.val(val[key]['@value']);
-                                }
-                                if (val[key]['@id']) {
-                                    innerProperty.val(key);
-                                    textareaValue.val(val[key]['@id']);
-                                }
-                                if (val[key]['label']) textareaValue.val(val[key]['label']);
-
-                                if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
-                                    container.find('.nested-data-type_repeat_property')
-                                        .last()
-                                        .find('.o-title.items')
-                                        .remove();
-
-                                    container.find('.nested-data-type_repeat_property')
-                                        .last()
-                                        .find('.input')
-                                        .css('display', 'none');
-                                    structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
-                                }
-                            }
-                            else if (idx > 1 && key != "is_hidden") {
-                                structureField(innerProperty, `inner-property-${idx}`, insertVal = key);
-                                if (key == '@type') { structureField(innerClass, `inner-class-${idx}`, insertVal = value); };
-                                if (val[key]['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['@value']); }
-                                if (val[key]['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['label']); }
-                                if (val[key]['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val[key]['@id']); };
-
-                                if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
-                                    container.find('.nested-data-type_repeat_property')
-                                        .last()
-                                        .find('.o-title.items')
-                                        .remove();
-
-                                    container.find('.nested-data-type_repeat_property')
-                                        .last()
-                                        .find('.input')
-                                        .css('display', 'none');
-
-                                    structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
-                                }
-                            }
-                        }
+        else {
+            let templateId = $('#resource-template-select').val();
+            let templateUrl = `/api/resource_templates/${templateId}`
+            getTemplateJson(templateUrl).then(function (returndata) {
+                returndata["o:resource_template_property"].forEach(element => {
+                    if (element["o:data_type"] == type) {
+                        let p = JSON.parse(element["o:data"][0]["default_value"]);
+                        let k = Object.keys(p[0]);
+                        renderFields(p, k)
                     }
-                }
+                });
             });
         }
-        catch (error) { console.error(error); }
     }
 
     $(document).on('click', '.nested-data-type__resource_link', function (e) {
@@ -297,9 +201,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     // document.querySelector('.nested-data-type_property_dropdown').addEventListener('input', function (e) {
 
-
-
-
     //     var input = e.target,
     //         list = input.getAttribute('list'),
     //         options = document.querySelectorAll('#' + list + ' option[value="' + input.value + '"]'),
@@ -313,4 +214,133 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
 
     // });
 
+    function renderFields(properties, keys) {
+        keys.forEach((element, idx) => {
+            let item = properties[0][element];
+
+            for (i in item) {
+                let val = item[i];
+                if (typeof val === "object") {
+
+                    if (idx == 1) {
+                        findItems();
+
+                        // select.val(element);
+                        structureField(select, `property-label-${idx}`, insertVal = element);
+
+                        if (val['@value']) textareaValue.val(val['@value']);
+                        if (val['label']) textareaValue.val(val['label']);
+                        if (val['@id']) textareaUri.val(val['@id']);
+                        if (val['is_hidden']) {
+                            structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
+                            container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
+                        };
+                        if (val['@id'] && val['@id'].includes('/api/items/')) {
+
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.input')
+                                .css('display', 'none');
+
+                            structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
+                        }
+                    }
+
+                    else if (idx > 1) {
+                        cloneItem(idx);
+                        findItems();
+
+                        container.find('.nested-data-type_hide_property').last().removeClass('o-icon-private').addClass('o-icon-public');
+
+                        if (renderedLink) {
+                            renderedLink.remove();
+                            textareaValue.parent().parent().css('display', 'block');
+                        }
+
+                        structureField(select, `property-label-${idx}`, insertVal = element);
+                        innerClass.parent().css('display', 'none');
+                        if (val['is_hidden']) {
+                            structureField(isHidden, `is-hidden-${idx}`, insertVal = 'true');
+                            container.find('.nested-data-type_hide_property').last().removeClass('o-icon-public').addClass('o-icon-private')
+                        };
+                        if (val['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['@value']); };
+                        if (val['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val['label']); }
+                        if (val['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val['@id']); }
+                        if (val['@id'] && val['@id'].includes('/api/items/')) {
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.o-title.items')
+                                .remove();
+
+                            container.find('.nested-data-type_repeat_property')
+                                .last()
+                                .find('.input')
+                                .css('display', 'none');
+
+                            structureInnerLinks(val['label'], val['@id'].replace('/api/items/', '/admin/item/'));
+                        }
+                    }
+
+                    for (const [key, value] of Object.entries(val)) {
+                        if (key == '@type') { innerClass.val(value).parent().css('display', 'block') };
+                        if (idx == 1) {
+                            if (val[key]['@value']) {
+                                innerProperty.val(key);
+                                innerProperty.parent().css('display', 'block');
+                                textareaValue.val(val[key]['@value']);
+                            }
+                            if (val[key]['@id']) {
+                                innerProperty.val(key);
+                                textareaValue.val(val[key]['@id']);
+                            }
+                            if (val[key]['label']) textareaValue.val(val[key]['label']);
+
+                            if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.o-title.items')
+                                    .remove();
+
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.input')
+                                    .css('display', 'none');
+                                structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
+                            }
+                        }
+                        else if (idx > 1 && key != "is_hidden") {
+                            structureField(innerProperty, `inner-property-${idx}`, insertVal = key);
+                            if (key == '@type') { structureField(innerClass, `inner-class-${idx}`, insertVal = value); };
+                            if (val[key]['@value']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['@value']); }
+                            if (val[key]['label']) { structureField(textareaValue, `property-value-${idx}`, insertVal = val[key]['label']); }
+                            if (val[key]['@id']) { structureField(textareaUri, `property-uri-${idx}`, insertVal = val[key]['@id']); };
+
+                            if (val[key]['@id'] && val[key]['@id'].includes('/api/items/')) {
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.o-title.items')
+                                    .remove();
+
+                                container.find('.nested-data-type_repeat_property')
+                                    .last()
+                                    .find('.input')
+                                    .css('display', 'none');
+
+                                structureInnerLinks(val[key]['label'], val[key]['@id'].replace('/api/items/', '/admin/item/'));
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    }
 });
+
+
+function getTemplateJson(url) {
+    return $.getJSON(url, function (data) {
+        return data
+    });
+}
+
