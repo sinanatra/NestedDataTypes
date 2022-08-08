@@ -1,20 +1,20 @@
-
 <div class="nested-data-type_entity_label"> <?= $label ?> </div>
-<input type="hidden" class="nested-data-type_value" data-value-key="@value"/>
+<input type="hidden" class="nested-data-type_value" data-value-key="@value" />
 
 <div class="nested-data-type_properties">
     <datalist id="property-dropdown" name="property-dropdown">
-        <?php foreach($properties as $property): ?>
+        <?php foreach ($properties as $property) : ?>
             <option value="<?= $property->term() ?>"><?= $property->label() ?></option>
         <?php endforeach; ?>
-    </datalist> 
+    </datalist>
     <datalist id="class-dropdown" name="class-dropdown">
-        <?php foreach($classes as $class): ?>
+        <?php foreach ($classes as $class) : ?>
             <option value="<?= $class->term() ?>"><?= $class->label() ?></option>
         <?php endforeach; ?>
     </datalist>
     <div class="nested-data-type_repeat_property">
         <div class="nested-data-type_repeat_property_list">
+            <div class="nested-data-type_handle"></div>
             <input class="nested-data-type-dropwdown nested-data-type_property_dropdown" list="property-dropdown" data-value-key="property-label-1" placeholder="Select a property" />
             <button class="nested-data-type_button o-icon-add nested-data-type_add_class"></button>
         </div>
@@ -40,9 +40,6 @@
 
 <button class="nested-data-type_button o-icon-add nested-data-type_add_property">Add Property</button>
 
-<a 
-    class="nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select" 
-    data-sidebar-content-url="<?= $this->url('admin/default', ['controller' => 'nested-data-type', 'action' => 'sidebar-select'], false) ?>" 
-    href="#item-resource-select"> 
+<a class="nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select" data-sidebar-content-url="<?= $this->url('admin/default', ['controller' => 'nested-data-type', 'action' => 'sidebar-select'], false) ?>" href="#item-resource-select">
     Link Item
 </a>
