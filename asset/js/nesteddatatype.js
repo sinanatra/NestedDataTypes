@@ -17,14 +17,14 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         innerClass = repeatProperty.find('.inner-class');
         innerProperty = repeatProperty.find('.inner-property');
         renderedLink = repeatProperty.find('.items');
+        $(".nested-data-type_properties").sortable();
     }
-
-
 
     const cloneItem = (idx) => {
         let item = `
         <div class="nested-data-type_repeat_property">
-            <div class="nested-data-type_repeat_property_list">
+        <div class="nested-data-type_repeat_property_list">
+        <div class="nested-data-type_handle"></div>
                 <input class="nested-data-type-dropwdown nested-data-type_property_dropdown" list="property-dropdown" data-value-key="property-label-${idx}" placeholder="Select a property" />
                 <button class="nested-data-type_button o-icon-add nested-data-type_add_class"></button>
             </div>
@@ -64,14 +64,15 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             title = data["o:title"];
         });
 
-        let link = `<div class="o-title items ml">
-        <a href="${url}"> ${title || insertVal}</a>
-        <br>
-        <a class="nested-data-type_button nested-data-type_add_resource o-icon- fa-link button resource-select" data-sidebar-content-url="/admin/nested-data-type/sidebar-select" href="#item-resource-select">Update</a>
-        </div>`
+        let link = `<div class="o-title items ml"><a href="${url}"> ${title || insertVal}</a></div>`
         container.append(container.find('.nested-data-type_repeat_property').last().append(link));
     }
 
+    // Replace item on click
+    // container.on('click', '.re-link', function (e) {
+    //     e.preventDefault();
+    //     openSidebar()
+    // });
 
     // Add item on click
     addBtn.on('click', function (e) {
@@ -89,7 +90,7 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             .last()
             .find('.o-icon-private')
             .removeClass('o-icon-private')
-            .addClass('o-icon-public')
+            .addClass('o-icon-public')();
     });
 
     // Remove Button on click
@@ -198,21 +199,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
             structureInnerLinks(label, url);
         };
     });
-
-    // document.querySelector('.nested-data-type_property_dropdown').addEventListener('input', function (e) {
-
-    //     var input = e.target,
-    //         list = input.getAttribute('list'),
-    //         options = document.querySelectorAll('#' + list + ' option[value="' + input.value + '"]'),
-    //         hiddenInput = document.getElementById('property_dropdown-hidden');
-
-    //     if (options.length > 0) {
-    //         hiddenInput.value = input.value;
-    //         input.value = options[0].innerText;
-    //         console.log(hiddenInput,input.value)
-    //     }
-
-    // });
 
     function renderFields(properties, keys) {
         keys.forEach((element, idx) => {
@@ -344,3 +330,35 @@ function getTemplateJson(url) {
     });
 }
 
+// function openSidebar() {
+//     let sidebar = $(".sidebar");
+//     sidebar.addClass('active');
+//     sidebar.trigger('o:sidebar-opened');
+//     if ($('.active.sidebar').length > 1) {
+//         var highestIndex = 3; // The CSS currently defines the default sidebar z-index as 3.
+//         $('.active.sidebar').each(function () {
+//             var currentIndex = parseInt($(this).css('zIndex'), 10);
+//             if (currentIndex > highestIndex) {
+//                 highestIndex = currentIndex;
+//             }
+//         });
+//         sidebar.css('zIndex', highestIndex + 1);
+
+//         // populate
+//         var sidebarContent = sidebar.find('.sidebar-content');
+//         sidebar.addClass('loading');
+//         sidebarContent.empty();
+
+//         $.get("/admin/nested-data-type/sidebar-select")
+//             .done(function (data) {
+//                 sidebarContent.html(data);
+//                 $(sidebar).trigger('o:sidebar-content-loaded');
+//             })
+//             .fail(function () {
+//                 sidebarContent.html('<p>' + Omeka.jsTranslate('Something went wrong') + '</p>');
+//             })
+//             .always(function () {
+//                 sidebar.removeClass('loading');
+//             });
+//     }
+// }

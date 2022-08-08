@@ -1,4 +1,5 @@
 <?php
+
 namespace NestedDataType;
 
 use Laminas\Mvc\MvcEvent;
@@ -23,7 +24,7 @@ class Module extends AbstractModule
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
-         $sharedEventManager->attach(
+        $sharedEventManager->attach(
             \Omeka\Api\Representation\ItemRepresentation::class,
             'rep.resource.title',
             [$this, 'handleResourceTitle']
@@ -87,6 +88,8 @@ class Module extends AbstractModule
         $view->headLink()
             ->appendStylesheet($assetUrl('css/nesteddatatype.css', 'NestedDataType'));
         $view->headScript()
+            ->appendFile($assetUrl('js/jquery-ui.min.js', 'NestedDataType'));
+        $view->headScript()
             ->appendFile($assetUrl('js/nesteddatatype.js', 'NestedDataType'));
     }
 
@@ -97,13 +100,13 @@ class Module extends AbstractModule
         $names = $event->getParam('registered_names');
 
         foreach ($resourcesClasses as $class) {
-            $names[] = 'nesteddatatype#'.$class->term();
+            $names[] = 'nesteddatatype#' . $class->term();
         }
 
         $event->setParam('registered_names', $names);
     }
 
-   /**
+    /**
      * Manage the parsing of the title.
      *
      * @param Event $event
@@ -112,32 +115,32 @@ class Module extends AbstractModule
     {
         $resource = $event->getTarget();
         $template = $resource->resourceTemplate();
-        
+
         if ($template && $property = $template->titleProperty()) {
             $title = $resource->value($property->term());
             $properties = json_decode($title, true);
 
             $event->setParam('title', (string) $title);
-            if(isset($properties[0]['@type'])){
+            if (isset($properties[0]['@type'])) {
                 $values = [];
-                
+
                 foreach ($properties[0] as $key => $val) {
-                    if (is_array($val) || is_object($val)){
+                    if (is_array($val) || is_object($val)) {
                         foreach ($val as $innerKey => $innerVal) {
-                            if($innerVal['@value']){
+                            if ($innerVal['@value']) {
                                 $values[$key] = $innerVal['@value'];
                                 continue;
                             }
-                            if($innerVal['label']){
+                            if ($innerVal['label']) {
                                 $values[$key] = $innerVal['label'];
                                 continue;
                             }
                             foreach ($innerVal as $secondKey => $secondVal) {
                                 $values[$key] = $secondVal['@value'];
-                                if($secondVal['@value']){
+                                if ($secondVal['@value']) {
                                     $values[$key] = $secondVal['@value'];
                                 }
-                                if($secondVal['label']){
+                                if ($secondVal['label']) {
                                     $values[$key] = $secondVal['label'];
                                 }
                             }
@@ -146,13 +149,9 @@ class Module extends AbstractModule
                 }
                 $cleanedTitle = implode('; ', $values);
                 $event->setParam('title', (string) $cleanedTitle);
-            }
-            else {
+            } else {
                 $event->setParam('title', (string) $title);
             }
-            
         }
     }
-
 }
-
