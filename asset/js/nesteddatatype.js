@@ -1,6 +1,7 @@
 $(document).on('o:prepare-value', function (e, type, value, valueObj) {
     const thisValue = $(value);
     const container = thisValue.find('.nested-data-type_properties');
+    container.sortable()
     const addBtn = thisValue.find('.nested-data-type_add_property');
 
     // Add a default Value to trigger the hydrate() function
@@ -17,7 +18,6 @@ $(document).on('o:prepare-value', function (e, type, value, valueObj) {
         innerClass = repeatProperty.find('.inner-class');
         innerProperty = repeatProperty.find('.inner-property');
         renderedLink = repeatProperty.find('.items');
-        $(".nested-data-type_properties").sortable();
     }
 
     const cloneItem = (idx) => {
