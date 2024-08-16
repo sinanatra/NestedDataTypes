@@ -43,7 +43,7 @@ class NestedDataType extends Literal
 
     public function getOptgroupLabel()
     {
-        return 'Specific class'; // @translate
+        return 'Nested Class'; // @translate
     }
 
     public function form(PhpRenderer $view)
