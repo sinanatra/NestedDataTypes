@@ -1,6 +1,6 @@
-# Nested Data types module for Omeka S
+# Nested Data type module for Omeka S
 
-This module allows the user to choose a specific resource class as datatype while editing resource templates.    Additionally, when editing an item, the user can select inner properties for the chosen class.
+This module allows the user to choose a specific resource class as datatype while editing resource templates. Additionally, when editing an item, the user can select inner properties for the chosen class.
 
 It was initially designed to work with the nested CIDOC-CRM structure in Omeka S, avoiding creating an abundance of Omeka resources.
 However, it should only replace an Omeka resource, literal, or URI when strictly necessary.  
