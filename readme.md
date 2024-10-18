@@ -1,4 +1,4 @@
-# Nested Data type module for Omeka S
+# Nested Data Type module for Omeka S
 
 This module allows the user to choose a specific resource class as datatype while editing resource templates. Additionally, when editing an item, the user can select inner properties for the chosen class.
 
