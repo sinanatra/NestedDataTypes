@@ -13,7 +13,7 @@ class IndexController extends AbstractActionController
 
         $response = $this->api()->search('items', $this->params()->fromQuery());
         $this->paginator($response->getTotalResults());
-        
+
         $view = new ViewModel;
         $view->setVariable('items', $response->getContent());
         $view->setVariable('search', $this->params()->fromQuery('search'));

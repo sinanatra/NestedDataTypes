@@ -40,10 +40,10 @@ class NestedDataType extends Literal
     {
         return $this->resourceClass->term();
     }
-    
+
     public function getOptgroupLabel()
     {
-        return 'Specific class'; // @translate
+        return 'Nested Class'; // @translate
     }
 
     public function form(PhpRenderer $view)
@@ -58,7 +58,7 @@ class NestedDataType extends Literal
     }
 
     public function getJsonLd(ValueRepresentation $value)
-    {    
+    {
         $values= json_decode($value->value(), true);
         $simpleValue = [];
 
@@ -94,9 +94,9 @@ class NestedDataType extends Literal
             'simpleValue' => implode('; ', $simpleValue),
         ];
 
-        return $jsonLd;   
+        return $jsonLd;
     }
-    
+
     /**
      * @param array $valueObject
      */
@@ -120,7 +120,7 @@ class NestedDataType extends Literal
         return true;
     }
 
-    public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){        
+    public function hydrate(array $valueObject, Value $value, AbstractEntityAdapter $adapter){
         $serviceLocator = $adapter->getServiceLocator();
 
         $prevLabel = '';
@@ -140,19 +140,19 @@ class NestedDataType extends Literal
 
 
             foreach($valueObject as $key => $label) {
-                
+
                 if ($prevLabel == $label) {
                     $num += 1;
                 }
-                
+
                 if (substr($key,0,15) !== 'property-label-'){
                     continue;
                 }
-                
+
                 $idx = (int) substr($key,15);
                 $val = $valueObject["property-value-$idx"];
                 $uri = $valueObject["property-uri-$idx"];
-                
+
                 // Update title from Omeka Id - to be cleaned.
                 if (strpos($uri, '/api/items/') !== false) {
                     try {
@@ -180,21 +180,21 @@ class NestedDataType extends Literal
                         $uri ? ['@id' => $uri, 'label' => $val] : ['@value' => $val],
                         $isHidden ? ['is_hidden' => $isHidden] : []
                     );
-                }        
+                }
             }
 
-            $value->setValue(json_encode([$properties]));     
+            $value->setValue(json_encode([$properties]));
             $prevLabel .= $label;
         }
     }
 
     public function render(PhpRenderer $view, ValueRepresentation $value){
-        
+
         $values = json_decode($value->value(), true);
         $simpleValue = [];
-        
+
         foreach ($values[0] as $key => $val) {
-            
+
             if($key == '@type'){
                 $simpleValue[$key] =  $val;
             }
@@ -240,7 +240,7 @@ class NestedDataType extends Literal
                 else {
                     $v =  "<span class='value__property'>" . $v . "</span>";
                 }
-                
+
                 $k =  "<span class='value__label'><em>" . str_replace("_", " ", explode(":", $k)[1]) . "</em></span>";
 
                 return "<div class='value-container__value'>" . $k . "<span class='value__separator'>" .": " . "</span>" . $v . "</div>";
@@ -250,4 +250,3 @@ class NestedDataType extends Literal
         )). "</div>";
     }
 }
-

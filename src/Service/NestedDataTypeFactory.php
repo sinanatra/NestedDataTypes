@@ -15,14 +15,14 @@ class NestedDataTypeFactory implements AbstractFactoryInterface
     public function __invoke($services, $requestedName, array $options = null)
     {
         $term = explode('#', $requestedName)[1];
-        
+
         if (!$term) {
             throw new NestedDataTypeException("Invalid term : ".$term);
         }
-        
+
         $apiManager = $services->get('Omeka\ApiManager');
         $resourceClasses = $apiManager->search('resource_classes', ['term' => $term])->getContent();
-        
+
         $vocabularyId = $resourceClasses[0]->vocabulary()->id();
         $properties = $apiManager->search('properties', ['vocabulary_id' => $vocabularyId])->getContent();
         $classes = $apiManager->search('resource_classes', ['vocabulary_id' => $vocabularyId])->getContent();
